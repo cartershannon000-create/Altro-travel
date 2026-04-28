@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tulíp — Your Cities, Ranked</title>
+  <meta
+    name="description"
+    content="Tulíp is a refined travel ranking app for logging cities, comparing where you have been, and discovering where you would go back to first."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Ovo&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --dewdrop: #f9fbf7;
+      --white: #ffffff;
+      --moss: #2f3e2c;
+      --grey: #b8c0c1;
+      --pink: #f2e9f1;
+      --amber: #2f3e2c;
+      --clay: #c9b8b0;
+      --line: rgba(47, 62, 44, 0.14);
+      --muted: rgba(47, 62, 44, 0.68);
+      --shadow: 0 24px 48px rgba(47, 62, 44, 0.08);
+      --soft-shadow: 0 14px 28px rgba(47, 62, 44, 0.06);
+      --radius: 8px;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--moss);
+      background: var(--dewdrop);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(249, 251, 247, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 31px;
+      line-height: 1;
+    }
+
+    .brand span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .top-links a:hover {
+      color: var(--amber);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 28px;
+      border-radius: 10px;
+      background: var(--amber);
+      color: var(--dewdrop);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 26px rgba(47, 62, 44, 0.22);
+    }
+
+    .button.secondary {
+      background: transparent;
+      border: 1px solid var(--moss);
+      color: var(--moss);
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .hero {
+      padding: 76px 0 52px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 52px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 20px;
+      color: var(--amber);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      font-family: "Ovo", Georgia, serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      max-width: 10ch;
+      margin: 0 0 22px;
+      font-size: clamp(54px, 8vw, 96px);
+      line-height: 0.95;
+    }
+
+    .lede {
+      max-width: 680px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .micro-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .micro-points span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .micro-points span::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .phone-stage {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 330px);
+      padding: 12px;
+      background: #11140f;
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+    }
+
+    .phone-screen {
+      aspect-ratio: 1206 / 2478;
+      background: var(--dewdrop);
+      border-radius: 28px;
+      overflow: hidden;
+    }
+
+    .app-shot {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .phone-notch {
+      width: 78px;
+      height: 8px;
+      margin: 0 auto 24px;
+      border-radius: 999px;
+      background: rgba(47, 62, 44, 0.24);
+    }
+
+    .screen-label {
+      margin: 0 0 10px;
+      color: var(--grey);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .city-title {
+      margin: 0 0 4px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 46px;
+      line-height: 1;
+    }
+
+    .city-meta {
+      margin: 0 0 20px;
+      color: var(--grey);
+      font-size: 13px;
+    }
+
+    .score-card,
+    .city-card,
+    .boarding-pass {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .score {
+      display: grid;
+      width: 68px;
+      height: 68px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--amber);
+      color: var(--dewdrop);
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .score-card strong,
+    .city-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .score-card span,
+    .city-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .city-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .city-card {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px;
+    }
+
+    .rank {
+      color: var(--amber);
+      font-weight: 800;
+    }
+
+    .boarding-pass {
+      position: absolute;
+      z-index: 3;
+      right: 4%;
+      bottom: 10%;
+      width: 220px;
+      padding: 18px;
+    }
+
+    .boarding-pass span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--grey);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .boarding-pass strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 34px;
+      font-weight: 400;
+    }
+
+    .boarding-pass p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section {
+      padding: 62px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 30px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 12px;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .value-card {
+      padding: 26px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(47, 62, 44, 0.4);
+      box-shadow: 0 22px 44px rgba(47, 62, 44, 0.11);
+    }
+
+    .value-card .kicker {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--amber);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .value-card h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      line-height: 1.25;
+    }
+
+    .value-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .flow-card {
+      counter-increment: step;
+      padding: 22px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .flow-card::before {
+      content: "0" counter(step);
+      display: inline-flex;
+      margin-bottom: 26px;
+      color: var(--amber);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .flow-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .flow-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .quote-band {
+      margin: 28px 0 0;
+      padding: 34px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .quote-band p {
+      max-width: 820px;
+      margin: 0;
+      font-family: "Ovo", Georgia, serif;
+      font-size: clamp(26px, 3.6vw, 42px);
+      line-height: 1.15;
+    }
+
+    .footer {
+      padding: 34px 0 46px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .top-links {
+        display: none;
+      }
+
+      .hero-grid,
+      .value-grid,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-stage {
+        min-height: 500px;
+      }
+
+      .boarding-pass {
+        right: 0;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      h1 {
+        font-size: 56px;
+      }
+
+      .phone {
+        width: min(100%, 270px);
+      }
+
+      .boarding-pass {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-top: -42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#top" aria-label="Tulíp home">Tulíp <span></span></a>
+        <nav class="top-links" aria-label="Primary navigation">
+          <a href="#rank">Rank</a>
+          <a href="#flow">How It Works</a>
+          <a href="#discover">Discover</a>
+          <a href="./privacy.html">Privacy</a>
+        </nav>
+        <a class="button" href="#join">Join Waitlist</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Travel, Ranked</span>
+            <h1>Your cities, ranked.</h1>
+            <p class="lede">
+              Tulíp helps you log the cities you have visited, compare the ones
+              you love, and build a ranked map of where you would go back to
+              first.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="#join">Join Waitlist</a>
+              <a class="button secondary" href="#flow">See How It Works</a>
+            </div>
+            <div class="micro-points" aria-label="Product highlights">
+              <span>City logs</span>
+              <span>Head-to-head rankings</span>
+              <span>Personal travel map</span>
+            </div>
+          </div>
+
+          <div class="phone-stage" aria-label="Tulíp app preview">
+            <div class="phone">
+              <div class="phone-screen">
+                <img
+                  class="app-shot"
+                  src="assets/tulipss.png"
+                  alt="Tulíp app rankings screen"
+                />
+              </div>
+            </div>
+            <div class="boarding-pass">
+              <span>Boarding Pass</span>
+              <strong>Where next?</strong>
+              <p>Choose between two cities and let your travel taste sharpen.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="rank">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Why Tulíp</span>
+            <h2>A better memory for where you have been.</h2>
+            <p>
+              Travel apps usually track plans. Tulíp tracks taste: what stayed
+              with you, what you would repeat, and what belongs on your map.
+            </p>
+          </div>
+          <div class="value-grid">
+            <article class="value-card">
+              <span class="kicker">Log</span>
+              <h3>Capture the trip while it is still alive.</h3>
+              <p>Add cities, dates, notes, and first impressions without turning travel into admin.</p>
+            </article>
+            <article class="value-card">
+              <span class="kicker">Compare</span>
+              <h3>Find out what you actually loved.</h3>
+              <p>Simple head-to-head showdowns turn fuzzy memories into a living ranked list.</p>
+            </article>
+            <article class="value-card">
+              <span class="kicker">Return</span>
+              <h3>Know where you would go back first.</h3>
+              <p>Your rankings become a quiet guide for future weekends, long trips, and daydreams.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">How It Works</span>
+            <h2>Built like a boarding pass. Used like a journal.</h2>
+            <p>
+              The experience is light by design: log a city, choose a starting
+              tier, compare trips, and watch your map become more personal.
+            </p>
+          </div>
+          <div class="flow">
+            <article class="flow-card">
+              <h3>Add a city</h3>
+              <p>Start with where you have been and a few details worth remembering.</p>
+            </article>
+            <article class="flow-card">
+              <h3>Choose a tier</h3>
+              <p>Loved it, liked it, it was fine, or not my city. No overthinking.</p>
+            </article>
+            <article class="flow-card">
+              <h3>Compare memories</h3>
+              <p>Answer simple city matchups to refine the order of your list.</p>
+            </article>
+            <article class="flow-card">
+              <h3>See your map</h3>
+              <p>Your travel history becomes a ranked map of taste and return energy.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="discover">
+        <div class="container">
+          <div class="quote-band">
+            <p>
+              A garden of places you have known, ordered by the ones that still
+              pull you forward.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="join">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Coming Soon</span>
+            <h2>Your next favorite city is already waiting.</h2>
+            <p>
+              Tulíp is currently in development. Join the waitlist copy section
+              can connect to your form, app store link, or launch list when you
+              are ready.
+            </p>
+          </div>
+          <a class="button" href="mailto:cartershannon000@gmail.com?subject=Tulip%20Waitlist">Join Waitlist</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <span>© 2026 Tulíp. Built for thoughtful travel.</span>
+        <div class="footer-links">
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
