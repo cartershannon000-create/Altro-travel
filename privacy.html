@@ -4,19 +4,182 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Altro — Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Ovo&display=swap" rel="stylesheet" />
   <style>
-    body { margin: 0; background: #f9fbf7; color: #2f3e2c; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.7; }
-    main { width: min(calc(100% - 40px), 860px); margin: 0 auto; padding: 64px 0; }
-    h1 { color: #2f3e2c; font-size: 42px; line-height: 1.1; }
-    a { color: #2f3e2c; }
-    section { padding-top: 18px; border-top: 1px solid rgba(47, 62, 44, 0.14); margin-top: 24px; }
+    :root {
+      --dewdrop: #f9fbf7;
+      --moss: #2f3e2c;
+      --muted: rgba(47, 62, 44, 0.68);
+      --line: rgba(47, 62, 44, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--dewdrop);
+      color: var(--moss);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+    main { width: min(calc(100% - 40px), 760px); margin: 0 auto; padding: 56px 0 80px; }
+    .back {
+      display: inline-block;
+      margin-bottom: 32px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .back:hover { color: var(--moss); }
+    h1 {
+      margin: 0 0 8px;
+      font-family: "Ovo", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(38px, 5vw, 56px);
+      line-height: 1.05;
+    }
+    .updated {
+      margin: 0 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 36px 0 12px;
+      font-family: "Ovo", Georgia, serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    p, li { color: var(--moss); font-size: 16px; }
+    p { margin: 0 0 14px; }
+    ul { margin: 0 0 18px; padding-left: 22px; }
+    li { margin-bottom: 6px; }
+    .lede {
+      padding: 18px 22px;
+      background: rgba(47, 62, 44, 0.05);
+      border-left: 3px solid var(--moss);
+      border-radius: 4px;
+      color: var(--moss);
+      margin-bottom: 32px;
+    }
+    a { color: var(--moss); }
   </style>
 </head>
 <body>
   <main>
-    <a href="./marketing.html">Back to Altro</a>
+    <a class="back" href="./marketing.html">← Back to Altro</a>
     <h1>Privacy Policy</h1>
-    <p>The app is still in development. Privacy policy will be updated once complete.</p>
+    <p class="updated">Effective May 13, 2026</p>
+
+    <div class="lede">
+      <p>Altro is a personal city ranking app. We collect only what we need to make the product work — your account, the cities you log, and what you choose to share with friends. This page tells you exactly what that means.</p>
+    </div>
+
+    <h2>Who we are</h2>
+    <p>
+      Altro is operated by Carter Shannon as an independent developer.
+      You can reach us at <a href="mailto:cartershannon000@gmail.com">cartershannon000@gmail.com</a>
+      for any questions about this policy or your data.
+    </p>
+
+    <h2>What we collect</h2>
+    <p>We collect the information you provide to use the app:</p>
+    <ul>
+      <li><strong>Account info</strong> — email address, password (stored hashed), display name, username, and optional avatar photo.</li>
+      <li><strong>Your travel data</strong> — the cities you log, scores you assign, attribute ratings (cuisine, walkability, etc.), tier sentiments, notes, dates, companions, and any photos you attach.</li>
+      <li><strong>Social activity</strong> — who you follow, your likes, your comments, and your saved/wishlist cities.</li>
+      <li><strong>Profile preferences</strong> — your selected home base city, profile visibility (public, friends, or private), and theme settings.</li>
+      <li><strong>Device data</strong> — when you enable notifications, we store an Expo push token to deliver them. We do not access your contacts, calendar, or media library unless you explicitly grant permission for a specific feature (e.g., picking an avatar photo).</li>
+    </ul>
+
+    <h2>What we don't collect</h2>
+    <ul>
+      <li>Your real-time location.</li>
+      <li>Your contacts, calendar, browsing history, or other apps' data.</li>
+      <li>Advertising identifiers — we do not show ads and we do not sell data to advertisers.</li>
+    </ul>
+
+    <h2>How we use your data</h2>
+    <p>We use the information above to:</p>
+    <ul>
+      <li>Operate your account and store your rankings, lists, and comments.</li>
+      <li>Compute personalized recommendations based on the attributes you rate.</li>
+      <li>Show your activity to people you've allowed to see it, per your visibility settings.</li>
+      <li>Send notifications you've opted into (e.g., when a friend ranks a city).</li>
+      <li>Diagnose crashes and fix bugs (anonymized error reports only — see "Service providers" below).</li>
+    </ul>
+    <p>We do not use your data for advertising, ranking other users, or training third-party AI models.</p>
+
+    <h2>Who can see what</h2>
+    <p>You control visibility:</p>
+    <ul>
+      <li><strong>Public profile</strong> — anyone using Altro can see your username, display name, avatar, and city rankings.</li>
+      <li><strong>Friends-only profile</strong> — only people you've approved can see your activity.</li>
+      <li><strong>Private profile</strong> — your data is yours alone; nothing is visible to other users.</li>
+    </ul>
+    <p>Individual city logs also have their own visibility (public, friends, or private) so you can keep specific entries private even on a public profile.</p>
+
+    <h2>Service providers</h2>
+    <p>Altro is built on a small number of trusted services. Each receives only what it needs to do its job:</p>
+    <ul>
+      <li><strong>Supabase</strong> — stores your account, rankings, photos, and social data on secure servers.</li>
+      <li><strong>Mapbox</strong> — renders the world map. When the map loads, Mapbox receives standard request info (e.g., IP address) needed to serve map tiles. Mapbox does not receive your account info or rankings.</li>
+      <li><strong>Apple TestFlight / App Store</strong> — distributes the app and provides anonymized crash reports.</li>
+      <li><strong>Expo</strong> — delivers over-the-air JavaScript updates and push notifications.</li>
+      <li><strong>Sentry (optional, when enabled)</strong> — collects anonymized crash and error reports to help us fix bugs. No personal identifiers are intentionally included.</li>
+    </ul>
+
+    <h2>How long we keep your data</h2>
+    <p>
+      We keep your data for as long as your account is active. When you delete your
+      account from inside the app (Settings → Delete Account), we remove your
+      profile, rankings, lists, comments, and uploaded photos from our systems.
+      Backups may retain copies for up to 30 days before being purged.
+    </p>
+
+    <h2>Your rights</h2>
+    <ul>
+      <li><strong>Access</strong> — you can see all your data inside the app at any time.</li>
+      <li><strong>Edit or delete</strong> — you can edit any ranking, delete any post, or remove your account entirely from Settings.</li>
+      <li><strong>Export</strong> — if you'd like a copy of your data in a portable format, email us and we'll send it.</li>
+      <li><strong>Questions or complaints</strong> — email <a href="mailto:cartershannon000@gmail.com">cartershannon000@gmail.com</a> and we'll respond within a reasonable timeframe.</li>
+    </ul>
+    <p>
+      Depending on where you live (e.g., EU, UK, California), you may have additional
+      rights under GDPR, UK-GDPR, or CCPA. You can exercise any of these by contacting us.
+    </p>
+
+    <h2>Children</h2>
+    <p>
+      Altro is not intended for use by children under 13. We do not knowingly collect
+      data from anyone under 13. If you believe a child has provided us with personal
+      data, please contact us and we will delete it.
+    </p>
+
+    <h2>Security</h2>
+    <p>
+      We use industry-standard practices to protect your data: passwords are hashed
+      and never stored in plain text, sensitive credentials are kept in encrypted device
+      storage, and all communication with our servers uses HTTPS. No system is perfect,
+      but we treat your data with the care we'd want for our own.
+    </p>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      We may update this policy as the app evolves. The "Effective" date at the top
+      reflects the most recent change. If we make material changes, we'll notify you
+      inside the app or by email before they take effect.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions, concerns, or data requests:
+      <a href="mailto:cartershannon000@gmail.com">cartershannon000@gmail.com</a>
+    </p>
   </main>
 </body>
 </html>

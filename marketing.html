@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Altro — Your Cities, Ranked</title>
+  <title>Altro — Travel, Ranked</title>
   <meta
     name="description"
-    content="Altro is a refined travel ranking app for logging cities, comparing where you have been, and discovering where you would go back to first."
+    content="Altro is a personal city ranking app. Score every place you've been, discover cities that match your taste, and turn travel memories into a living map."
   />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,22 +14,22 @@
   <style>
     :root {
       --dewdrop: #f9fbf7;
+      --cream: #fbf8f1;
       --white: #ffffff;
       --moss: #2f3e2c;
+      --moss-soft: #4a6444;
+      --moss-pale: #7a9978;
       --grey: #b8c0c1;
-      --pink: #f2e9f1;
-      --amber: #2f3e2c;
-      --clay: #c9b8b0;
+      --amber: #b85c3b;
       --line: rgba(47, 62, 44, 0.14);
       --muted: rgba(47, 62, 44, 0.68);
-      --shadow: 0 24px 48px rgba(47, 62, 44, 0.08);
+      --shadow: 0 24px 48px rgba(47, 62, 44, 0.10);
       --soft-shadow: 0 14px 28px rgba(47, 62, 44, 0.06);
-      --radius: 8px;
+      --radius: 12px;
       --max-width: 1180px;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -40,20 +40,14 @@
       line-height: 1.7;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .shell {
-      min-height: 100vh;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .container {
       width: min(calc(100% - 40px), var(--max-width));
       margin: 0 auto;
     }
 
+    /* ── Top bar ──────────────────────────────────────────── */
     .topbar {
       position: sticky;
       top: 0;
@@ -78,13 +72,14 @@
       font-family: "Ovo", Georgia, serif;
       font-size: 31px;
       line-height: 1;
+      color: var(--moss);
     }
 
     .brand span {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--amber);
+      background: var(--moss);
     }
 
     .top-links {
@@ -96,9 +91,7 @@
       font-weight: 600;
     }
 
-    .top-links a:hover {
-      color: var(--amber);
-    }
+    .top-links a:hover { color: var(--moss); }
 
     .button {
       display: inline-flex;
@@ -107,7 +100,7 @@
       min-height: 48px;
       padding: 0 28px;
       border-radius: 10px;
-      background: var(--amber);
+      background: var(--moss);
       color: var(--dewdrop);
       font-size: 13px;
       font-weight: 800;
@@ -130,9 +123,8 @@
       text-transform: none;
     }
 
-    .hero {
-      padding: 76px 0 52px;
-    }
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero { padding: 76px 0 52px; }
 
     .hero-grid {
       display: grid;
@@ -144,28 +136,44 @@
     .eyebrow {
       display: inline-flex;
       margin-bottom: 20px;
-      color: var(--amber);
+      color: var(--moss);
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
-    h1,
-    h2 {
+    h1, h2 {
       font-family: "Ovo", Georgia, serif;
       font-weight: 400;
     }
 
     h1 {
-      max-width: 10ch;
+      max-width: 11ch;
       margin: 0 0 22px;
       font-size: clamp(54px, 8vw, 96px);
       line-height: 0.95;
     }
 
+    h1 .accent {
+      position: relative;
+      white-space: nowrap;
+    }
+
+    h1 .accent::after {
+      content: "";
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      bottom: 4px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--moss-pale);
+      opacity: 0.55;
+    }
+
     .lede {
-      max-width: 680px;
+      max-width: 620px;
       margin: 0;
       color: var(--muted);
       font-size: 19px;
@@ -181,7 +189,7 @@
     .micro-points {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
       margin-top: 26px;
     }
 
@@ -199,9 +207,10 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--amber);
+      background: var(--moss);
     }
 
+    /* ── Phone preview ──────────────────────────────────────────── */
     .phone-stage {
       position: relative;
       min-height: 560px;
@@ -212,18 +221,19 @@
     .phone {
       position: relative;
       z-index: 2;
-      width: min(100%, 330px);
-      padding: 12px;
+      width: min(100%, 320px);
+      padding: 10px;
       background: #11140f;
-      border-radius: 38px;
+      border-radius: 40px;
       box-shadow: var(--shadow);
     }
 
     .phone-screen {
       aspect-ratio: 1206 / 2478;
       background: var(--dewdrop);
-      border-radius: 28px;
+      border-radius: 30px;
       overflow: hidden;
+      position: relative;
     }
 
     .app-shot {
@@ -234,141 +244,17 @@
       object-position: center top;
     }
 
-    .phone-notch {
-      width: 78px;
-      height: 8px;
-      margin: 0 auto 24px;
-      border-radius: 999px;
-      background: rgba(47, 62, 44, 0.24);
-    }
-
-    .screen-label {
-      margin: 0 0 10px;
-      color: var(--grey);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .city-title {
-      margin: 0 0 4px;
-      font-family: "Ovo", Georgia, serif;
-      font-size: 46px;
-      line-height: 1;
-    }
-
-    .city-meta {
-      margin: 0 0 20px;
-      color: var(--grey);
-      font-size: 13px;
-    }
-
-    .score-card,
-    .city-card,
-    .boarding-pass {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--soft-shadow);
-    }
-
-    .score-card {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 16px;
-      align-items: center;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .score {
-      display: grid;
-      width: 68px;
-      height: 68px;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--amber);
-      color: var(--dewdrop);
-      font-size: 23px;
-      font-weight: 800;
-    }
-
-    .score-card strong,
-    .city-card strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 15px;
-    }
-
-    .score-card span,
-    .city-card span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .city-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .city-card {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px;
-    }
-
-    .rank {
-      color: var(--amber);
-      font-weight: 800;
-    }
-
-    .boarding-pass {
-      position: absolute;
-      z-index: 3;
-      right: 4%;
-      bottom: 10%;
-      width: 220px;
-      padding: 18px;
-    }
-
-    .boarding-pass span {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--grey);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .boarding-pass strong {
-      display: block;
-      margin-bottom: 8px;
-      font-family: "Ovo", Georgia, serif;
-      font-size: 34px;
-      font-weight: 400;
-    }
-
-    .boarding-pass p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .section {
-      padding: 62px 0;
-    }
+    /* ── Sections ──────────────────────────────────────────── */
+    .section { padding: 70px 0; }
 
     .section-head {
-      max-width: 760px;
-      margin-bottom: 30px;
+      max-width: 720px;
+      margin-bottom: 36px;
     }
 
     .section-head h2 {
       margin: 0 0 12px;
-      font-size: clamp(38px, 5vw, 64px);
+      font-size: clamp(38px, 5vw, 60px);
       line-height: 1;
     }
 
@@ -378,49 +264,73 @@
       font-size: 18px;
     }
 
-    .value-grid {
+    /* ── Feature rows (alternating screenshot + copy) ── */
+    .feature-row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
+      gap: 60px;
+      align-items: center;
+      padding: 48px 0;
+      border-top: 1px solid var(--line);
     }
 
-    .value-card {
-      padding: 26px;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--soft-shadow);
-      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    .feature-row.flip {
+      grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
     }
 
-    .value-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(47, 62, 44, 0.4);
-      box-shadow: 0 22px 44px rgba(47, 62, 44, 0.11);
+    .feature-row.flip .feature-copy { order: 2; }
+    .feature-row.flip .feature-phone { order: 1; }
+
+    .feature-copy h3 {
+      margin: 0 0 14px;
+      font-family: "Ovo", Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(32px, 4vw, 44px);
+      line-height: 1.05;
     }
 
-    .value-card .kicker {
+    .feature-copy .kicker {
       display: block;
-      margin-bottom: 12px;
-      color: var(--amber);
+      margin-bottom: 14px;
+      color: var(--moss);
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    .value-card h3 {
-      margin: 0 0 10px;
-      font-size: 21px;
-      line-height: 1.25;
-    }
-
-    .value-card p {
+    .feature-copy p {
       margin: 0;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 17px;
+      max-width: 540px;
     }
 
+    .feature-phone {
+      justify-self: center;
+      width: min(100%, 280px);
+      padding: 9px;
+      background: #11140f;
+      border-radius: 36px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .feature-phone-screen {
+      aspect-ratio: 1206 / 2478;
+      border-radius: 28px;
+      overflow: hidden;
+      background: var(--dewdrop);
+    }
+
+    .feature-phone-screen img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* ── How it works ──────────────────────────────────────────── */
     .flow {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -430,7 +340,7 @@
 
     .flow-card {
       counter-increment: step;
-      padding: 22px;
+      padding: 24px;
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -440,8 +350,8 @@
     .flow-card::before {
       content: "0" counter(step);
       display: inline-flex;
-      margin-bottom: 26px;
-      color: var(--amber);
+      margin-bottom: 20px;
+      color: var(--moss);
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.12em;
@@ -450,6 +360,8 @@
     .flow-card h3 {
       margin: 0 0 8px;
       font-size: 18px;
+      font-family: "Ovo", Georgia, serif;
+      font-weight: 400;
     }
 
     .flow-card p {
@@ -458,13 +370,13 @@
       font-size: 14px;
     }
 
+    /* ── Quote band ──────────────────────────────────────────── */
     .quote-band {
-      margin: 28px 0 0;
-      padding: 34px;
-      background: var(--white);
-      border: 1px solid var(--line);
+      margin: 12px 0 0;
+      padding: 48px;
+      background: var(--moss);
+      color: var(--cream);
       border-radius: var(--radius);
-      box-shadow: var(--soft-shadow);
     }
 
     .quote-band p {
@@ -475,6 +387,30 @@
       line-height: 1.15;
     }
 
+    /* ── Join section ──────────────────────────────────────────── */
+    .join-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+      padding: 48px;
+      text-align: center;
+    }
+
+    .join-card h2 {
+      margin: 0 0 12px;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+    }
+
+    .join-card p {
+      max-width: 580px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
     .footer {
       padding: 34px 0 46px;
       border-top: 1px solid var(--line);
@@ -489,55 +425,24 @@
       gap: 18px;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 16px;
-    }
+    .footer-links { display: flex; gap: 16px; }
 
+    /* ── Responsive ──────────────────────────────────────────── */
     @media (max-width: 900px) {
-      .top-links {
-        display: none;
-      }
-
-      .hero-grid,
-      .value-grid,
-      .flow {
-        grid-template-columns: 1fr;
-      }
-
-      .phone-stage {
-        min-height: 500px;
-      }
-
-      .boarding-pass {
-        right: 0;
-      }
+      .top-links { display: none; }
+      .hero-grid, .flow { grid-template-columns: 1fr; }
+      .feature-row, .feature-row.flip { grid-template-columns: 1fr; gap: 32px; }
+      .feature-row.flip .feature-copy { order: 1; }
+      .feature-row.flip .feature-phone { order: 2; }
+      .phone-stage { min-height: 500px; }
     }
 
     @media (max-width: 620px) {
-      .container {
-        width: min(calc(100% - 28px), var(--max-width));
-      }
-
-      .hero {
-        padding-top: 48px;
-      }
-
-      h1 {
-        font-size: 56px;
-      }
-
-      .phone {
-        width: min(100%, 270px);
-      }
-
-      .boarding-pass {
-        position: relative;
-        right: auto;
-        bottom: auto;
-        width: 100%;
-        margin-top: -42px;
-      }
+      .container { width: min(calc(100% - 28px), var(--max-width)); }
+      .hero { padding-top: 48px; }
+      h1 { font-size: 56px; }
+      .phone { width: min(100%, 270px); }
+      .quote-band, .join-card { padding: 32px; }
     }
   </style>
 </head>
@@ -548,8 +453,9 @@
         <a class="brand" href="#top" aria-label="Altro home">Altro <span></span></a>
         <nav class="top-links" aria-label="Primary navigation">
           <a href="#rank">Rank</a>
-          <a href="#flow">How It Works</a>
           <a href="#discover">Discover</a>
+          <a href="#recs">Recs</a>
+          <a href="#map">Map</a>
           <a href="./privacy.html">Privacy</a>
         </nav>
         <a class="button" href="#join">Join Waitlist</a>
@@ -557,130 +463,211 @@
     </header>
 
     <main id="top">
+
+      <!-- ── Hero ──────────────────────────────────────────── -->
       <section class="hero">
         <div class="container hero-grid">
           <div>
             <span class="eyebrow">Travel, Ranked</span>
-            <h1>Your cities, ranked.</h1>
+            <h1>Rank the cities<br>that shaped <span class="accent">you</span>.</h1>
             <p class="lede">
-              Altro helps you log the cities you have visited, compare the ones
-              you love, and build a ranked map of where you would go back to
-              first.
+              Altro is a personal city ranking app. Score every place you've been
+              on a 1–10 scale, discover cities that match your taste, and turn
+              travel memories into a living map.
             </p>
             <div class="hero-actions">
               <a class="button" href="#join">Join Waitlist</a>
-              <a class="button secondary" href="#flow">See How It Works</a>
+              <a class="button secondary" href="#rank">See How It Works</a>
             </div>
             <div class="micro-points" aria-label="Product highlights">
-              <span>City logs</span>
-              <span>Head-to-head rankings</span>
-              <span>Personal travel map</span>
+              <span>1–10 city scoring</span>
+              <span>Taste-based discovery</span>
+              <span>Weekly curated picks</span>
             </div>
           </div>
 
           <div class="phone-stage" aria-label="Altro app preview">
             <div class="phone">
               <div class="phone-screen">
-                <img
-                  class="app-shot"
-                  src="tulipss.png"
-                  alt="Altro app rankings screen"
-                />
+                <img class="app-shot" src="assets/rank-list.png" alt="Altro app — ranked cities list with scores" />
               </div>
-            </div>
-            <div class="boarding-pass">
-              <span>Boarding Pass</span>
-              <strong>Where next?</strong>
-              <p>Choose between two cities and let your travel taste sharpen.</p>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- ── Feature: Rank ──────────────────────────────────────────── -->
       <section class="section" id="rank">
         <div class="container">
           <div class="section-head">
             <span class="eyebrow">Why Altro</span>
-            <h2>A better memory for where you have been.</h2>
+            <h2>A travel app for what you actually loved.</h2>
             <p>
-              Travel apps usually track plans. Altro tracks taste: what stayed
-              with you, what you would repeat, and what belongs on your map.
+              Most travel apps track plans. Altro tracks taste — what stayed with
+              you, what you'd return to first, and what belongs on your personal map.
             </p>
           </div>
-          <div class="value-grid">
-            <article class="value-card">
-              <span class="kicker">Log</span>
-              <h3>Capture the trip while it is still alive.</h3>
-              <p>Add cities, dates, notes, and first impressions without turning travel into admin.</p>
-            </article>
-            <article class="value-card">
-              <span class="kicker">Compare</span>
-              <h3>Find out what you actually loved.</h3>
-              <p>Simple head-to-head showdowns turn fuzzy memories into a living ranked list.</p>
-            </article>
-            <article class="value-card">
-              <span class="kicker">Return</span>
-              <h3>Know where you would go back first.</h3>
-              <p>Your rankings become a quiet guide for future weekends, long trips, and daydreams.</p>
-            </article>
+
+          <div class="feature-row">
+            <div class="feature-copy">
+              <span class="kicker">Rank</span>
+              <h3>Every city, scored 1 to 10.</h3>
+              <p>
+                Log a city, sort it into a sentiment bucket, then sharpen the order
+                with quick head-to-head comparisons. Your scores recalculate live
+                as your list grows.
+              </p>
+            </div>
+            <div class="feature-phone">
+              <div class="feature-phone-screen">
+                <img src="assets/rank-list.png" alt="Ranked cities list">
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-row flip" id="discover">
+            <div class="feature-copy">
+              <span class="kicker">Discover</span>
+              <h3>Find cities that match your taste.</h3>
+              <p>
+                Swipe through places tuned to what you actually love. Save the
+                ones that fit, skip the ones that don't — Altro learns your taste
+                with every swipe.
+              </p>
+            </div>
+            <div class="feature-phone">
+              <div class="feature-phone-screen">
+                <img src="assets/discover.png" alt="Discover tab">
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-row" id="recs">
+            <div class="feature-copy">
+              <span class="kicker">Weekly Picks</span>
+              <h3>Curated cities, tuned to you.</h3>
+              <p>
+                Every week, hand-picked destinations matched to the places
+                you've already ranked. Similar to what you love, trending among
+                people like you, and right for the season.
+              </p>
+            </div>
+            <div class="feature-phone">
+              <div class="feature-phone-screen">
+                <img src="assets/recs.png" alt="Weekly recommendations">
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-row flip" id="map">
+            <div class="feature-copy">
+              <span class="kicker">World Map</span>
+              <h3>Your travel life, on a single map.</h3>
+              <p>
+                Every ranked and saved city becomes part of a living map of your
+                taste. Filter by visited, saved, or all — and see your footprint
+                at a glance.
+              </p>
+            </div>
+            <div class="feature-phone">
+              <div class="feature-phone-screen">
+                <img src="assets/world-map.png" alt="World map view">
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-row">
+            <div class="feature-copy">
+              <span class="kicker">City Match</span>
+              <h3>Know if a city fits before you go.</h3>
+              <p>
+                Every city is scored against your taste across six attributes —
+                cuisine, walkability, livability, nightlife, affordability, and
+                safety — so you know which places will feel like home.
+              </p>
+            </div>
+            <div class="feature-phone">
+              <div class="feature-phone-screen">
+                <img src="assets/match.png" alt="City match breakdown">
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-row flip">
+            <div class="feature-copy">
+              <span class="kicker">Social</span>
+              <h3>See what your friends are ranking.</h3>
+              <p>
+                Follow people whose taste you trust. Discover cities through
+                their real rankings, compare your travel profiles, and find
+                places you both would love.
+              </p>
+            </div>
+            <div class="feature-phone">
+              <div class="feature-phone-screen">
+                <img src="assets/feed.png" alt="Social feed">
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+      <!-- ── How it works ──────────────────────────────────────────── -->
       <section class="section" id="flow">
         <div class="container">
           <div class="section-head">
             <span class="eyebrow">How It Works</span>
-            <h2>Built like a boarding pass. Used like a journal.</h2>
+            <h2>Light to use. Honest about your taste.</h2>
             <p>
-              The experience is light by design: log a city, choose a starting
-              tier, compare trips, and watch your map become more personal.
+              No spreadsheets, no overthinking. Log a city, react to it, sharpen
+              with comparisons, and watch your map grow.
             </p>
           </div>
           <div class="flow">
             <article class="flow-card">
               <h3>Add a city</h3>
-              <p>Start with where you have been and a few details worth remembering.</p>
+              <p>Start with where you've been and a quick sentiment — loved it, liked it, or it was fine.</p>
             </article>
             <article class="flow-card">
-              <h3>Choose a tier</h3>
-              <p>Loved it, liked it, it was fine, or not my city. No overthinking.</p>
+              <h3>Compare two</h3>
+              <p>Pick the one you'd return to first. A few rounds is enough to sharpen the order.</p>
             </article>
             <article class="flow-card">
-              <h3>Compare memories</h3>
-              <p>Answer simple city matchups to refine the order of your list.</p>
+              <h3>Rate attributes</h3>
+              <p>Score cuisine, walkability, nightlife, and more — Altro learns what you actually value.</p>
             </article>
             <article class="flow-card">
-              <h3>See your map</h3>
-              <p>Your travel history becomes a ranked map of taste and return energy.</p>
+              <h3>Discover what's next</h3>
+              <p>Get curated picks and taste-matched cities the moment your list is alive.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section" id="discover">
+      <!-- ── Quote ──────────────────────────────────────────── -->
+      <section class="section">
         <div class="container">
           <div class="quote-band">
             <p>
-              A garden of places you have known, ordered by the ones that still
-              pull you forward.
+              A quiet record of the places that pulled you forward — and a
+              compass for the next ones that will.
             </p>
           </div>
         </div>
       </section>
 
+      <!-- ── Join ──────────────────────────────────────────── -->
       <section class="section" id="join">
         <div class="container">
-          <div class="section-head">
+          <div class="join-card">
             <span class="eyebrow">Coming Soon</span>
             <h2>Your next favorite city is already waiting.</h2>
             <p>
-              Altro is currently in development. Join the waitlist copy section
-              can connect to your form, app store link, or launch list when you
-              are ready.
+              Altro is currently in private beta. Join the waitlist and we'll
+              let you know when the doors open.
             </p>
+            <a class="button" href="mailto:cartershannon000@gmail.com?subject=Altro%20Waitlist">Join Waitlist</a>
           </div>
-          <a class="button" href="mailto:cartershannon000@gmail.com?subject=Tulip%20Waitlist">Join Waitlist</a>
         </div>
       </section>
     </main>
