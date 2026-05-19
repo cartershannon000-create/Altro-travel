@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Altro — Travel, Ranked</title>
+  <title>Altro · Travel, Ranked</title>
   <meta
     name="description"
     content="Altro is a personal city ranking app. Score every place you've been, discover cities that match your taste, and turn travel memories into a living map."
@@ -31,7 +31,6 @@
       --muted-soft: rgba(47, 62, 44, 0.5);
       --shadow: 0 30px 60px rgba(47, 62, 44, 0.12);
       --soft-shadow: 0 18px 36px rgba(47, 62, 44, 0.06);
-      --inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
       --radius: 16px;
       --radius-sm: 10px;
       --max-width: 1200px;
@@ -53,6 +52,7 @@
 
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
+    button { font: inherit; }
 
     .container {
       width: min(calc(100% - 40px), var(--max-width));
@@ -98,7 +98,7 @@
     }
 
     .topbar-inner {
-      min-height: 76px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -110,7 +110,7 @@
       align-items: baseline;
       gap: 10px;
       font-family: "Ovo", Georgia, serif;
-      font-size: 30px;
+      font-size: 28px;
       line-height: 1;
       color: var(--moss);
       letter-spacing: -0.01em;
@@ -160,12 +160,14 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      min-height: 48px;
-      padding: 0 26px;
+      min-height: 44px;
+      padding: 0 22px;
+      border: 0;
+      cursor: pointer;
       border-radius: 999px;
       background: var(--moss);
       color: var(--dewdrop);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -206,14 +208,14 @@
     /* ── Hero ──────────────────────────────────────────── */
     .hero {
       position: relative;
-      padding: 88px 0 64px;
+      padding: 48px 0 32px;
       overflow: hidden;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-      gap: 56px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 48px;
       align-items: center;
     }
 
@@ -221,13 +223,13 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       padding: 6px 14px;
       background: rgba(47, 62, 44, 0.06);
       border: 1px solid var(--line-soft);
       border-radius: 999px;
       color: var(--moss);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -249,10 +251,10 @@
     }
 
     h1 {
-      max-width: 12ch;
-      margin: 0 0 24px;
-      font-size: clamp(56px, 8.4vw, 104px);
-      line-height: 0.96;
+      max-width: 13ch;
+      margin: 0 0 18px;
+      font-size: clamp(40px, 5.2vw, 64px);
+      line-height: 1.02;
     }
 
     h1 .accent {
@@ -266,8 +268,8 @@
       position: absolute;
       left: -2px;
       right: -2px;
-      bottom: 6px;
-      height: 8px;
+      bottom: 4px;
+      height: 6px;
       border-radius: 999px;
       background: var(--moss-pale);
       opacity: 0.5;
@@ -275,24 +277,24 @@
     }
 
     .lede {
-      max-width: 560px;
+      max-width: 520px;
       margin: 0;
       color: var(--muted);
-      font-size: 19px;
+      font-size: 17px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 34px;
+      gap: 12px;
+      margin-top: 26px;
     }
 
     .micro-points {
       display: flex;
       flex-wrap: wrap;
-      gap: 18px;
-      margin-top: 28px;
+      gap: 16px;
+      margin-top: 22px;
     }
 
     .micro-points span {
@@ -300,7 +302,7 @@
       align-items: center;
       gap: 8px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
     }
 
@@ -315,7 +317,7 @@
     /* ── Phone preview ─────────────────────────────────── */
     .phone-stage {
       position: relative;
-      min-height: 600px;
+      min-height: 460px;
       display: grid;
       place-items: center;
     }
@@ -323,41 +325,53 @@
     .phone-stage::before {
       content: "";
       position: absolute;
-      width: 380px;
-      height: 380px;
+      width: 320px;
+      height: 320px;
       border-radius: 50%;
       background: radial-gradient(closest-side, rgba(122, 153, 120, 0.28), transparent 70%);
       filter: blur(8px);
+      z-index: 0;
+    }
+
+    .phone-wrap {
+      position: relative;
+      width: min(100%, 240px);
       z-index: 1;
     }
 
     .phone {
       position: relative;
-      z-index: 2;
-      width: min(100%, 320px);
-      padding: 10px;
-      background: linear-gradient(160deg, #1c2018 0%, #11140f 60%);
-      border-radius: 44px;
+      width: 100%;
+      padding: 11px;
+      border-radius: 46px;
+      background: linear-gradient(155deg, #353932 0%, #1c1f17 38%, #0e100b 100%);
       box-shadow:
-        var(--shadow),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.10),
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.16),
+        inset 0 -1.5px 1px rgba(0, 0, 0, 0.6),
+        0 1px 1px rgba(255, 255, 255, 0.05),
+        0 30px 60px rgba(47, 62, 44, 0.20),
+        0 12px 24px rgba(47, 62, 44, 0.10);
       transform: rotate(-2deg);
       transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
     }
 
-    .phone-stage:hover .phone { transform: rotate(-2deg) translateY(-6px); }
+    .phone-wrap:hover .phone { transform: rotate(-2deg) translateY(-4px); }
 
     .phone::before {
       content: "";
       position: absolute;
-      top: 22px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 92px;
-      height: 24px;
-      background: #0b0d09;
+      width: 78px;
+      height: 22px;
+      background: #050605;
       border-radius: 999px;
       z-index: 3;
+      box-shadow:
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.06),
+        inset 0 -0.5px 0 rgba(0, 0, 0, 0.6);
     }
 
     .phone-screen {
@@ -378,62 +392,63 @@
 
     .float-card {
       position: absolute;
-      z-index: 3;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.92);
+      z-index: 4;
+      padding: 11px 13px;
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 12px;
       box-shadow: var(--soft-shadow);
-      font-size: 13px;
+      font-size: 12px;
       color: var(--moss);
       transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      white-space: nowrap;
     }
 
     .float-card.fc-score {
       top: 14%;
-      left: -8%;
+      left: -68px;
       transform: rotate(-4deg);
     }
 
     .float-card.fc-match {
       bottom: 12%;
-      right: -6%;
+      right: -68px;
       transform: rotate(3deg);
     }
 
-    .phone-stage:hover .float-card.fc-score { transform: rotate(-4deg) translateY(-4px); }
-    .phone-stage:hover .float-card.fc-match { transform: rotate(3deg) translateY(-4px); }
+    .phone-wrap:hover .float-card.fc-score { transform: rotate(-4deg) translateY(-4px); }
+    .phone-wrap:hover .float-card.fc-match { transform: rotate(3deg) translateY(-4px); }
 
     .float-card .fc-label {
       display: block;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .float-card .fc-value {
       display: flex;
       align-items: baseline;
-      gap: 6px;
+      gap: 5px;
       font-family: "Ovo", Georgia, serif;
-      font-size: 22px;
+      font-size: 18px;
     }
 
     .fc-value small {
       font-family: "Inter", sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       font-weight: 600;
     }
 
     .fc-bar {
-      margin-top: 8px;
-      width: 110px;
-      height: 4px;
+      margin-top: 7px;
+      width: 96px;
+      height: 3px;
       background: rgba(47, 62, 44, 0.1);
       border-radius: 999px;
       overflow: hidden;
@@ -447,20 +462,20 @@
 
     /* ── Stat strip ────────────────────────────────────── */
     .stats {
-      padding: 36px 0 64px;
+      padding: 24px 0 48px;
     }
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 0;
-      padding: 28px;
+      padding: 22px;
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--soft-shadow);
     }
     .stat {
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-right: 1px solid var(--line-soft);
     }
     .stat:last-child { border-right: 0; }
@@ -468,61 +483,53 @@
     .stat .num {
       display: block;
       font-family: "Ovo", Georgia, serif;
-      font-size: 36px;
+      font-size: 30px;
       line-height: 1;
       letter-spacing: -0.02em;
     }
     .stat .label {
       display: block;
       margin-top: 6px;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--muted);
       font-weight: 600;
     }
 
     /* ── Sections ──────────────────────────────────────── */
-    .section { padding: 78px 0; position: relative; }
+    .section { padding: 56px 0; position: relative; }
 
     .section-head {
-      max-width: 740px;
-      margin-bottom: 48px;
+      max-width: 720px;
+      margin-bottom: 36px;
     }
 
     .section-head h2 {
-      margin: 14px 0 14px;
-      font-size: clamp(40px, 5.2vw, 64px);
-      line-height: 1;
+      margin: 12px 0 12px;
+      font-size: clamp(34px, 4.6vw, 54px);
+      line-height: 1.04;
     }
 
     .section-head p {
       margin: 0;
       color: var(--muted);
-      font-size: 18px;
+      font-size: 17px;
     }
 
-    /* ── Feature rows ──────────────────────────────────── */
+    /* ── Feature row (Rank) ────────────────────────────── */
     .feature-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
-      gap: 64px;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+      gap: 56px;
       align-items: center;
-      padding: 56px 0;
-      border-top: 1px solid var(--line-soft);
+      padding: 24px 0 12px;
     }
-
-    .feature-row.flip {
-      grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
-    }
-
-    .feature-row.flip .feature-copy { order: 2; }
-    .feature-row.flip .feature-phone { order: 1; }
 
     .feature-copy h3 {
-      margin: 0 0 16px;
+      margin: 0 0 14px;
       font-family: "Ovo", Georgia, serif;
       font-weight: 400;
-      font-size: clamp(32px, 4.2vw, 46px);
-      line-height: 1.05;
+      font-size: clamp(28px, 3.6vw, 38px);
+      line-height: 1.06;
       letter-spacing: -0.015em;
     }
 
@@ -530,7 +537,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       padding: 6px 12px;
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -542,8 +549,8 @@
     }
 
     .kicker svg {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       stroke: var(--moss);
       stroke-width: 1.6;
       fill: none;
@@ -552,14 +559,14 @@
     .feature-copy p {
       margin: 0;
       color: var(--muted);
-      font-size: 17px;
-      max-width: 540px;
+      font-size: 16px;
+      max-width: 520px;
     }
 
     .feature-bullets {
       list-style: none;
       padding: 0;
-      margin: 22px 0 0;
+      margin: 18px 0 0;
       display: grid;
       gap: 8px;
     }
@@ -584,40 +591,127 @@
 
     .feature-phone {
       justify-self: center;
-      position: relative;
-      width: min(100%, 290px);
-      padding: 10px;
-      background: linear-gradient(160deg, #1c2018 0%, #11140f 60%);
-      border-radius: 38px;
-      box-shadow: var(--shadow);
-    }
-
-    .feature-phone::before {
-      content: "";
-      position: absolute;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 78px;
-      height: 20px;
-      background: #0b0d09;
-      border-radius: 999px;
-      z-index: 3;
-    }
-
-    .feature-phone-screen {
-      aspect-ratio: 1206 / 2478;
-      border-radius: 30px;
-      overflow: hidden;
-      background: var(--dewdrop);
-    }
-
-    .feature-phone-screen img {
-      display: block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
+      max-width: 220px;
+    }
+
+    /* ── Slider (Inside Altro) ─────────────────────────── */
+    .slider { position: relative; }
+
+    .slider-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 28px;
+    }
+
+    .slider-tab {
+      padding: 9px 16px;
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 200ms ease;
+      white-space: nowrap;
+    }
+    .slider-tab:hover {
+      color: var(--moss);
+      border-color: var(--moss-pale);
+    }
+    .slider-tab.active {
+      background: var(--moss);
+      color: var(--dewdrop);
+      border-color: var(--moss);
+    }
+
+    .slider-viewport {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      border-radius: var(--radius);
+    }
+    .slider-viewport::-webkit-scrollbar { display: none; }
+
+    .slider-track {
+      display: flex;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      padding: 6px 2px 18px;
+    }
+
+    .slide-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 260px);
+      gap: 56px;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+      padding: 36px 40px;
+    }
+
+    .slide-phone {
+      justify-self: center;
+      width: 100%;
+      max-width: 220px;
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .slider-arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--moss);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 200ms ease;
+    }
+    .slider-arrow:hover:not(:disabled) {
+      background: var(--moss);
+      color: var(--dewdrop);
+      border-color: var(--moss);
+      transform: translateY(-1px);
+    }
+    .slider-arrow:disabled { opacity: 0.4; cursor: not-allowed; }
+    .slider-arrow svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+    .slider-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .slider-dots button {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(47, 62, 44, 0.2);
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+    .slider-dots button.active {
+      background: var(--moss);
+      transform: scale(1.3);
     }
 
     /* ── How it works ──────────────────────────────────── */
@@ -644,7 +738,7 @@
       counter-increment: step;
       position: relative;
       z-index: 1;
-      padding: 28px 22px;
+      padding: 24px 22px;
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -661,19 +755,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      margin-bottom: 18px;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 16px;
       border-radius: 50%;
       background: var(--moss);
       color: var(--dewdrop);
       font-family: "Ovo", Georgia, serif;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .flow-card h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
+      margin: 0 0 6px;
+      font-size: 18px;
       font-family: "Ovo", Georgia, serif;
       font-weight: 400;
     }
@@ -681,13 +775,13 @@
     .flow-card p {
       margin: 0;
       color: var(--muted);
-      font-size: 14.5px;
+      font-size: 13.5px;
       line-height: 1.6;
     }
 
     /* ── City marquee ──────────────────────────────────── */
     .marquee-section {
-      padding: 28px 0 52px;
+      padding: 20px 0 40px;
     }
     .marquee {
       overflow: hidden;
@@ -700,9 +794,9 @@
       width: max-content;
       animation: marquee 38s linear infinite;
       font-family: "Ovo", Georgia, serif;
-      font-size: clamp(28px, 4vw, 44px);
+      font-size: clamp(24px, 3.4vw, 38px);
       color: var(--moss);
-      opacity: 0.75;
+      opacity: 0.72;
     }
     .marquee-track span {
       display: inline-flex;
@@ -712,8 +806,8 @@
     }
     .marquee-track span::after {
       content: "";
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--moss-pale);
     }
@@ -726,54 +820,55 @@
     .quote-band {
       position: relative;
       margin: 12px 0 0;
-      padding: 64px 56px;
+      padding: 56px 48px;
       background:
-        radial-gradient(120% 100% at 0% 0%, rgba(122, 153, 120, 0.22), transparent 60%),
-        linear-gradient(150deg, #2f3e2c 0%, #243018 100%);
+        radial-gradient(120% 100% at 0% 0%, rgba(177, 207, 173, 0.30), transparent 60%),
+        radial-gradient(80% 80% at 100% 100%, rgba(184, 92, 59, 0.18), transparent 60%),
+        linear-gradient(135deg, #6c8a64 0%, #4a6444 35%, #2f3e2c 70%, #1d2a1c 100%);
       color: var(--cream);
       border-radius: var(--radius);
       overflow: hidden;
+      box-shadow: 0 30px 60px rgba(47, 62, 44, 0.18);
     }
 
     .quote-band::before {
       content: "\201C";
       position: absolute;
-      top: -32px;
+      top: -36px;
       left: 28px;
       font-family: "Ovo", Georgia, serif;
-      font-size: 260px;
+      font-size: 240px;
       line-height: 1;
-      color: var(--moss-pale);
-      opacity: 0.22;
+      color: rgba(213, 220, 205, 0.22);
       pointer-events: none;
     }
 
     .quote-band p {
       position: relative;
-      max-width: 860px;
+      max-width: 820px;
       margin: 0;
       font-family: "Ovo", Georgia, serif;
-      font-size: clamp(28px, 3.8vw, 46px);
-      line-height: 1.18;
+      font-size: clamp(26px, 3.6vw, 42px);
+      line-height: 1.2;
       letter-spacing: -0.01em;
     }
 
     .quote-attr {
       position: relative;
-      margin-top: 28px;
+      margin-top: 24px;
       display: inline-flex;
       align-items: center;
       gap: 12px;
       font-family: "Inter", sans-serif;
-      font-size: 13px;
+      font-size: 12.5px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(251, 248, 241, 0.7);
+      color: rgba(251, 248, 241, 0.72);
     }
 
     .quote-attr::before {
       content: "";
-      width: 36px;
+      width: 32px;
       height: 1px;
       background: rgba(251, 248, 241, 0.4);
     }
@@ -787,7 +882,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--soft-shadow);
-      padding: 64px 48px;
+      padding: 56px 44px;
       text-align: center;
       overflow: hidden;
     }
@@ -799,7 +894,6 @@
       width: 240px;
       height: 240px;
       border-radius: 50%;
-      filter: blur(0px);
       opacity: 0.12;
       pointer-events: none;
     }
@@ -819,16 +913,16 @@
     .join-card .inner { position: relative; z-index: 1; }
 
     .join-card h2 {
-      margin: 14px 0 14px;
-      font-size: clamp(34px, 4.2vw, 56px);
-      line-height: 1.05;
+      margin: 12px 0 12px;
+      font-size: clamp(30px, 3.8vw, 48px);
+      line-height: 1.06;
     }
 
     .join-card p {
-      max-width: 580px;
-      margin: 0 auto 30px;
+      max-width: 560px;
+      margin: 0 auto 26px;
       color: var(--muted);
-      font-size: 17px;
+      font-size: 16px;
     }
 
     .trust-row {
@@ -836,9 +930,9 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 22px;
-      margin-top: 28px;
+      margin-top: 26px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
     }
     .trust-row span {
@@ -856,7 +950,7 @@
 
     /* ── Footer ────────────────────────────────────────── */
     .footer {
-      padding: 56px 0 48px;
+      padding: 48px 0 40px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 14px;
@@ -879,7 +973,7 @@
 
     .footer-col h4 {
       margin: 0 0 14px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -901,10 +995,10 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 14px;
-      margin-top: 40px;
-      padding-top: 24px;
+      margin-top: 36px;
+      padding-top: 22px;
       border-top: 1px solid var(--line-soft);
-      font-size: 13px;
+      font-size: 12.5px;
     }
 
     /* ── Reveal animations ─────────────────────────────── */
@@ -927,37 +1021,41 @@
     /* ── Responsive ────────────────────────────────────── */
     @media (max-width: 980px) {
       .top-links { display: none; }
-      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; }
       .stat-grid { grid-template-columns: repeat(2, 1fr); }
       .stat { border-bottom: 1px solid var(--line-soft); }
       .stat:nth-child(2) { border-right: 0; }
       .stat:nth-child(3), .stat:nth-child(4) { border-bottom: 0; }
-      .feature-row, .feature-row.flip { grid-template-columns: 1fr; gap: 36px; }
-      .feature-row.flip .feature-copy { order: 1; }
-      .feature-row.flip .feature-phone { order: 2; }
+      .feature-row { grid-template-columns: 1fr; gap: 28px; }
+      .slide-inner { grid-template-columns: 1fr; gap: 28px; padding: 28px 24px; }
+      .slide-phone { order: 2; }
+      .slider-nav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+      .slider-arrow { display: none; }
       .flow { grid-template-columns: repeat(2, 1fr); }
       .flow::before { display: none; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: 1 / -1; }
-      .phone-stage { min-height: 540px; }
-      .phone-stage::before { width: 280px; height: 280px; }
-      .float-card.fc-score { left: 0; }
-      .float-card.fc-match { right: 0; }
+      .phone-stage { min-height: 420px; }
+      .phone-stage::before { width: 240px; height: 240px; }
+      .float-card.fc-score { left: -50px; }
+      .float-card.fc-match { right: -50px; }
     }
 
     @media (max-width: 620px) {
       .container { width: min(calc(100% - 28px), var(--max-width)); }
-      .hero { padding-top: 56px; }
-      h1 { font-size: 54px; }
-      .phone { width: min(100%, 270px); }
-      .quote-band { padding: 44px 28px; }
-      .quote-band::before { font-size: 180px; top: -16px; left: 12px; }
-      .join-card { padding: 44px 28px; }
-      .stat-grid { padding: 18px; }
+      .hero { padding-top: 36px; }
+      h1 { font-size: 42px; }
+      .phone-wrap { max-width: 220px; }
+      .quote-band { padding: 38px 24px; }
+      .quote-band::before { font-size: 160px; top: -16px; left: 12px; }
+      .join-card { padding: 40px 24px; }
+      .stat-grid { padding: 16px; }
       .stat { padding: 12px; }
-      .stat .num { font-size: 28px; }
+      .stat .num { font-size: 24px; }
       .flow { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
+      .float-card.fc-score { left: -28px; top: 4%; }
+      .float-card.fc-match { right: -28px; bottom: 4%; }
     }
   </style>
 </head>
@@ -969,9 +1067,8 @@
         <a class="brand" href="#top" aria-label="Altro home">Altro <span></span></a>
         <nav class="top-links" aria-label="Primary navigation">
           <a href="#rank">Rank</a>
-          <a href="#discover">Discover</a>
-          <a href="#recs">Recs</a>
-          <a href="#map">Map</a>
+          <a href="#features">Inside Altro</a>
+          <a href="#flow">How it works</a>
           <a href="./privacy.html">Privacy</a>
         </nav>
         <a class="button" href="#join">
@@ -988,10 +1085,10 @@
         <div class="container hero-grid">
           <div class="reveal">
             <span class="eyebrow">Travel, Ranked</span>
-            <h1>Rank the cities<br>that shaped <span class="accent">you</span>.</h1>
+            <h1>Rank the cities<br>that <span class="accent">shape you</span>.</h1>
             <p class="lede">
               Altro is a personal city ranking app. Score every place you've been
-              on a 1&ndash;10 scale, discover cities that match your taste, and turn
+              on a 1 to 10 scale, discover cities that match your taste, and turn
               travel memories into a living map.
             </p>
             <div class="hero-actions">
@@ -999,30 +1096,32 @@
                 Join Waitlist
                 <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
-              <a class="button secondary" href="#rank">See How It Works</a>
+              <a class="button secondary" href="#rank">See how it works</a>
             </div>
             <div class="micro-points" aria-label="Product highlights">
-              <span>1&ndash;10 city scoring</span>
-              <span>Taste-based discovery</span>
+              <span>1 to 10 city scoring</span>
+              <span>Discovery by taste</span>
               <span>Weekly curated picks</span>
             </div>
           </div>
 
           <div class="phone-stage reveal" aria-label="Altro app preview">
-            <div class="float-card fc-score" aria-hidden="true">
-              <span class="fc-label">Lisbon</span>
-              <span class="fc-value">9.2 <small>/ 10</small></span>
-              <span class="fc-bar"><i style="width:92%"></i></span>
-            </div>
-            <div class="phone">
-              <div class="phone-screen">
-                <img class="app-shot" src="visted.png" alt="Altro app — ranked cities list with scores" />
+            <div class="phone-wrap">
+              <div class="float-card fc-score" aria-hidden="true">
+                <span class="fc-label">Lisbon</span>
+                <span class="fc-value">9.2 <small>/ 10</small></span>
+                <span class="fc-bar"><i style="width:92%"></i></span>
               </div>
-            </div>
-            <div class="float-card fc-match" aria-hidden="true">
-              <span class="fc-label">Match</span>
-              <span class="fc-value">94% <small>your taste</small></span>
-              <span class="fc-bar"><i style="width:94%"></i></span>
+              <div class="phone">
+                <div class="phone-screen">
+                  <img class="app-shot" src="visted.png" alt="Altro app, ranked cities list with scores" />
+                </div>
+              </div>
+              <div class="float-card fc-match" aria-hidden="true">
+                <span class="fc-label">Match</span>
+                <span class="fc-value">94% <small>your taste</small></span>
+                <span class="fc-bar"><i style="width:94%"></i></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1033,7 +1132,7 @@
         <div class="container reveal">
           <div class="stat-grid">
             <div class="stat">
-              <span class="num">1&ndash;10</span>
+              <span class="num">1 to 10</span>
               <span class="label">Personal scoring scale</span>
             </div>
             <div class="stat">
@@ -1052,15 +1151,15 @@
         </div>
       </section>
 
-      <!-- ── Feature: Rank ─────────────────────────────── -->
+      <!-- ── Rank section ──────────────────────────────── -->
       <section class="section" id="rank">
         <div class="container">
           <div class="section-head reveal">
             <span class="eyebrow">Why Altro</span>
             <h2>A travel app for what you actually loved.</h2>
             <p>
-              Most travel apps track plans. Altro tracks taste &mdash; what stayed
-              with you, what you'd return to first, and what belongs on your personal map.
+              Most travel apps track plans. Altro tracks taste. What stayed with you,
+              what you'd return to first, and what belongs on your personal map.
             </p>
           </div>
 
@@ -1073,144 +1172,221 @@
               <h3>Every city, scored 1 to 10.</h3>
               <p>
                 Log a city, sort it into a sentiment bucket, then sharpen the order
-                with quick head-to-head comparisons. Your scores recalculate live
-                as your list grows.
+                with quick comparisons. Your scores recalculate live as your list grows.
               </p>
               <ul class="feature-bullets">
-                <li>Loved it, liked it, or it was fine &mdash; start with a feeling.</li>
+                <li>Loved it, liked it, or it was fine. Start with a feeling.</li>
                 <li>A few quick comparisons sharpen the order.</li>
                 <li>Scores update automatically as your list grows.</li>
               </ul>
             </div>
             <div class="feature-phone">
-              <div class="feature-phone-screen">
-                <img src="visted.png" alt="Ranked cities list">
+              <div class="phone">
+                <div class="phone-screen">
+                  <img src="visted.png" alt="Ranked cities list">
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="feature-row flip reveal" id="discover">
-            <div class="feature-copy">
-              <span class="kicker">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg>
-                Discover
-              </span>
-              <h3>Find cities that match your taste.</h3>
-              <p>
-                Swipe through places tuned to what you actually love. Save the
-                ones that fit, skip the ones that don't &mdash; Altro learns your taste
-                with every swipe.
-              </p>
-              <ul class="feature-bullets">
-                <li>One card, one decision &mdash; save or skip.</li>
-                <li>Recommendations adapt in real time.</li>
-                <li>Build a wishlist that actually reflects you.</li>
-              </ul>
-            </div>
-            <div class="feature-phone">
-              <div class="feature-phone-screen">
-                <img src="discover_tab.png" alt="Discover tab">
-              </div>
-            </div>
+      <!-- ── Inside Altro slider ───────────────────────── -->
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">Inside Altro</span>
+            <h2>Built for the way you actually travel.</h2>
+            <p>Each tool is tuned to one part of your travel life. Tap a tab or swipe to see how Altro fits together.</p>
           </div>
 
-          <div class="feature-row reveal" id="recs">
-            <div class="feature-copy">
-              <span class="kicker">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6m0 0 3-3m-3 3-3-3M4 13l4 8h8l4-8"/></svg>
-                Weekly Picks
-              </span>
-              <h3>Curated cities, tuned to you.</h3>
-              <p>
-                Every week, hand-picked destinations matched to the places
-                you've already ranked. Similar to what you love, trending among
-                people like you, and right for the season.
-              </p>
-              <ul class="feature-bullets">
-                <li>Three picks, every Sunday morning.</li>
-                <li>Matched against your scores, not generic trends.</li>
-                <li>Always seasonal &mdash; right place, right time.</li>
-              </ul>
+          <div class="slider reveal" data-slider>
+            <div class="slider-nav" role="tablist" aria-label="Features">
+              <button class="slider-tab active" data-i="0" type="button">Weekly Picks</button>
+              <button class="slider-tab" data-i="1" type="button">Saved</button>
+              <button class="slider-tab" data-i="2" type="button">Feed</button>
+              <button class="slider-tab" data-i="3" type="button">Discover</button>
+              <button class="slider-tab" data-i="4" type="button">Map</button>
+              <button class="slider-tab" data-i="5" type="button">City Match</button>
             </div>
-            <div class="feature-phone">
-              <div class="feature-phone-screen">
-                <img src="rec_tab.png" alt="Weekly recommendations">
-              </div>
-            </div>
-          </div>
 
-          <div class="feature-row flip reveal" id="map">
-            <div class="feature-copy">
-              <span class="kicker">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
-                World Map
-              </span>
-              <h3>Your travel life, on a single map.</h3>
-              <p>
-                Every ranked and saved city becomes part of a living map of your
-                taste. Filter by visited, saved, or all &mdash; and see your footprint
-                at a glance.
-              </p>
-              <ul class="feature-bullets">
-                <li>Filter visited, saved, or both.</li>
-                <li>Pins color-coded by score.</li>
-                <li>Watch your map grow over time.</li>
-              </ul>
-            </div>
-            <div class="feature-phone">
-              <div class="feature-phone-screen">
-                <img src="visited_map.png" alt="World map view">
-              </div>
-            </div>
-          </div>
+            <div class="slider-viewport" data-viewport>
+              <div class="slider-track">
 
-          <div class="feature-row reveal">
-            <div class="feature-copy">
-              <span class="kicker">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/></svg>
-                City Match
-              </span>
-              <h3>Know if a city fits before you go.</h3>
-              <p>
-                Every city is scored against your taste across six attributes &mdash;
-                cuisine, walkability, livability, nightlife, affordability, and
-                safety &mdash; so you know which places will feel like home.
-              </p>
-              <ul class="feature-bullets">
-                <li>Six attributes, weighted by what you care about.</li>
-                <li>One match score that tells you the truth.</li>
-                <li>Skip cities that don't fit before you book.</li>
-              </ul>
-            </div>
-            <div class="feature-phone">
-              <div class="feature-phone-screen">
-                <img src="Match_score.png" alt="City match breakdown">
-              </div>
-            </div>
-          </div>
+                <!-- 0 Weekly Picks -->
+                <article class="slide" data-slide>
+                  <div class="slide-inner">
+                    <div class="feature-copy">
+                      <span class="kicker">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6m0 0 3-3m-3 3-3-3M4 13l4 8h8l4-8"/></svg>
+                        Weekly Picks
+                      </span>
+                      <h3>Curated cities, tuned to you.</h3>
+                      <p>Every week, handpicked destinations matched to the places you've already ranked. Similar to what you love, trending among people like you, and right for the season.</p>
+                      <ul class="feature-bullets">
+                        <li>Three picks, every Sunday morning.</li>
+                        <li>Matched against your scores, not generic trends.</li>
+                        <li>Always seasonal. Right place, right time.</li>
+                      </ul>
+                    </div>
+                    <div class="slide-phone">
+                      <div class="phone">
+                        <div class="phone-screen">
+                          <img src="rec_tab.png" alt="Weekly recommendations">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
 
-          <div class="feature-row flip reveal">
-            <div class="feature-copy">
-              <span class="kicker">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM3 21a8 8 0 0 1 16 0M17 3a4 4 0 0 1 0 8M21 21a8 8 0 0 0-3-6"/></svg>
-                Social
-              </span>
-              <h3>See what your friends are ranking.</h3>
-              <p>
-                Follow people whose taste you trust. Discover cities through
-                their real rankings, compare your travel profiles, and find
-                places you both would love.
-              </p>
-              <ul class="feature-bullets">
-                <li>Follow people whose taste you trust.</li>
-                <li>Compare profiles side-by-side.</li>
-                <li>Find cities you'd both love.</li>
-              </ul>
-            </div>
-            <div class="feature-phone">
-              <div class="feature-phone-screen">
-                <img src="feed.png" alt="Social feed">
+                <!-- 1 Saved -->
+                <article class="slide" data-slide>
+                  <div class="slide-inner">
+                    <div class="feature-copy">
+                      <span class="kicker">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                        Saved
+                      </span>
+                      <h3>A wishlist for the cities you'll come back to.</h3>
+                      <p>Save any city the moment it catches you. Browse your wishlist in one place, sort by score or recency, and decide where to go next.</p>
+                      <ul class="feature-bullets">
+                        <li>Save cities with one tap.</li>
+                        <li>Sort by score, distance, or recency.</li>
+                        <li>Always know what's next on your list.</li>
+                      </ul>
+                    </div>
+                    <div class="slide-phone">
+                      <div class="phone">
+                        <div class="phone-screen">
+                          <img src="saved.png" alt="Saved cities wishlist">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- 2 Feed -->
+                <article class="slide" data-slide>
+                  <div class="slide-inner">
+                    <div class="feature-copy">
+                      <span class="kicker">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM3 21a8 8 0 0 1 16 0M17 3a4 4 0 0 1 0 8M21 21a8 8 0 0 0-3-6"/></svg>
+                        Feed
+                      </span>
+                      <h3>See what your friends are ranking.</h3>
+                      <p>Follow people whose taste you trust. Discover cities through their real rankings, compare your travel profiles, and find places you both would love.</p>
+                      <ul class="feature-bullets">
+                        <li>Follow people whose taste you trust.</li>
+                        <li>Compare profiles side by side.</li>
+                        <li>Find cities you'd both love.</li>
+                      </ul>
+                    </div>
+                    <div class="slide-phone">
+                      <div class="phone">
+                        <div class="phone-screen">
+                          <img src="feed.png" alt="Social feed">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- 3 Discover -->
+                <article class="slide" data-slide>
+                  <div class="slide-inner">
+                    <div class="feature-copy">
+                      <span class="kicker">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg>
+                        Discover
+                      </span>
+                      <h3>Find cities that match your taste.</h3>
+                      <p>Swipe through places tuned to what you actually love. Save the ones that fit, skip the ones that don't. Altro learns your taste with every swipe.</p>
+                      <ul class="feature-bullets">
+                        <li>One card, one decision. Save or skip.</li>
+                        <li>Recommendations adapt in real time.</li>
+                        <li>Build a wishlist that actually reflects you.</li>
+                      </ul>
+                    </div>
+                    <div class="slide-phone">
+                      <div class="phone">
+                        <div class="phone-screen">
+                          <img src="discover_tab.png" alt="Discover tab">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- 4 Map -->
+                <article class="slide" data-slide>
+                  <div class="slide-inner">
+                    <div class="feature-copy">
+                      <span class="kicker">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
+                        World Map
+                      </span>
+                      <h3>Your travel life, on a single map.</h3>
+                      <p>Every ranked and saved city becomes part of a living map of your taste. Filter by visited, saved, or all, and see your footprint at a glance.</p>
+                      <ul class="feature-bullets">
+                        <li>Filter visited, saved, or both.</li>
+                        <li>Pins color coded by score.</li>
+                        <li>Watch your map grow over time.</li>
+                      </ul>
+                    </div>
+                    <div class="slide-phone">
+                      <div class="phone">
+                        <div class="phone-screen">
+                          <img src="visited_map.png" alt="World map view">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- 5 City Match -->
+                <article class="slide" data-slide>
+                  <div class="slide-inner">
+                    <div class="feature-copy">
+                      <span class="kicker">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/></svg>
+                        City Match
+                      </span>
+                      <h3>Know if a city fits before you go.</h3>
+                      <p>Every city is scored against your taste across six attributes: cuisine, walkability, livability, nightlife, affordability, and safety. You'll know which places will feel like home.</p>
+                      <ul class="feature-bullets">
+                        <li>Six attributes, weighted by what you care about.</li>
+                        <li>One match score that tells you the truth.</li>
+                        <li>Skip the places that don't fit before you book.</li>
+                      </ul>
+                    </div>
+                    <div class="slide-phone">
+                      <div class="phone">
+                        <div class="phone-screen">
+                          <img src="Match_score.png" alt="City match breakdown">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
               </div>
+            </div>
+
+            <div class="slider-controls">
+              <button class="slider-arrow prev" type="button" aria-label="Previous feature">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="slider-dots" role="tablist" aria-label="Feature dots">
+                <button class="active" data-i="0" type="button" aria-label="Show feature 1"></button>
+                <button data-i="1" type="button" aria-label="Show feature 2"></button>
+                <button data-i="2" type="button" aria-label="Show feature 3"></button>
+                <button data-i="3" type="button" aria-label="Show feature 4"></button>
+                <button data-i="4" type="button" aria-label="Show feature 5"></button>
+                <button data-i="5" type="button" aria-label="Show feature 6"></button>
+              </div>
+              <button class="slider-arrow next" type="button" aria-label="Next feature">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -1235,9 +1411,9 @@
         <div class="container">
           <div class="section-head reveal">
             <span class="eyebrow">How It Works</span>
-            <h2>Light to use. Honest about your taste.</h2>
+            <h2>Simple to use, tailored to your travel taste.</h2>
             <p>
-              No spreadsheets, no overthinking. Log a city, react to it, sharpen
+              No spreadsheets, no overthinking. Log a city, rate what you loved, sharpen
               with comparisons, and watch your map grow.
             </p>
           </div>
@@ -1245,22 +1421,22 @@
             <article class="flow-card">
               <span class="flow-num">1</span>
               <h3>Add a city</h3>
-              <p>Start with where you've been and a quick sentiment &mdash; loved it, liked it, or it was fine.</p>
+              <p>Start with where you've been and a quick sentiment. Loved it, liked it, or it was fine.</p>
             </article>
             <article class="flow-card">
               <span class="flow-num">2</span>
-              <h3>Compare two</h3>
-              <p>Pick the one you'd return to first. A few rounds is enough to sharpen the order.</p>
+              <h3>Rate Attributes</h3>
+              <p>Score cuisine, walkability, nightlife, and more. Altro learns what you actually value.</p>
             </article>
             <article class="flow-card">
               <span class="flow-num">3</span>
-              <h3>Rate attributes</h3>
-              <p>Score cuisine, walkability, nightlife, and more &mdash; Altro learns what you actually value.</p>
+              <h3>Compare against your list</h3>
+              <p>Pick the one you'd return to first. A few rounds is enough to sharpen the order.</p>
             </article>
             <article class="flow-card">
               <span class="flow-num">4</span>
               <h3>Discover what's next</h3>
-              <p>Get curated picks and taste-matched cities the moment your list is alive.</p>
+              <p>Get curated picks and taste matched cities the moment your list is alive.</p>
             </article>
           </div>
         </div>
@@ -1271,7 +1447,7 @@
         <div class="container reveal">
           <div class="quote-band">
             <p>
-              A quiet record of the places that pulled you forward &mdash; and a
+              A quiet record of the places that pulled you forward, and a
               compass for the next ones that will.
             </p>
             <span class="quote-attr">The Altro promise</span>
@@ -1305,7 +1481,7 @@
                 </span>
                 <span>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v4l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
-                  Early-access invites
+                  Early access invites
                 </span>
               </div>
             </div>
@@ -1325,9 +1501,9 @@
             <h4>Product</h4>
             <ul>
               <li><a href="#rank">Rank</a></li>
-              <li><a href="#discover">Discover</a></li>
-              <li><a href="#recs">Weekly Picks</a></li>
-              <li><a href="#map">World Map</a></li>
+              <li><a href="#features">Inside Altro</a></li>
+              <li><a href="#flow">How it works</a></li>
+              <li><a href="#join">Waitlist</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -1342,7 +1518,7 @@
         </div>
         <div class="footer-bottom">
           <span>&copy; 2026 Altro. Built for thoughtful travel.</span>
-          <span>Made with care &middot; Hand-picked recommendations</span>
+          <span>Made with care. Handpicked recommendations.</span>
         </div>
       </div>
     </footer>
@@ -1353,17 +1529,60 @@
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce) {
         document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
-        return;
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
       }
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // ── Slider ──────────────────────────────────────
+      const slider = document.querySelector('[data-slider]');
+      if (!slider) return;
+      const viewport = slider.querySelector('[data-viewport]');
+      const slides = Array.from(slider.querySelectorAll('[data-slide]'));
+      const tabs = Array.from(slider.querySelectorAll('.slider-tab'));
+      const dots = Array.from(slider.querySelectorAll('.slider-dots button'));
+      const prev = slider.querySelector('.slider-arrow.prev');
+      const next = slider.querySelector('.slider-arrow.next');
+      let current = 0;
+
+      function setActive(i) {
+        current = Math.max(0, Math.min(slides.length - 1, i));
+        tabs.forEach((t, idx) => t.classList.toggle('active', idx === current));
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+        if (prev) prev.disabled = current === 0;
+        if (next) next.disabled = current === slides.length - 1;
+      }
+
+      function goTo(i) {
+        if (!slides[i]) return;
+        slides[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        setActive(i);
+      }
+
+      tabs.forEach((tab) => tab.addEventListener('click', () => goTo(parseInt(tab.dataset.i, 10))));
+      dots.forEach((dot) => dot.addEventListener('click', () => goTo(parseInt(dot.dataset.i, 10))));
+      if (prev) prev.addEventListener('click', () => goTo(current - 1));
+      if (next) next.addEventListener('click', () => goTo(current + 1));
+
+      // Sync active state when the user swipes the viewport
+      let scrollT;
+      viewport.addEventListener('scroll', () => {
+        clearTimeout(scrollT);
+        scrollT = setTimeout(() => {
+          const width = viewport.clientWidth;
+          const i = Math.round(viewport.scrollLeft / width);
+          if (i !== current) setActive(i);
+        }, 80);
+      });
+
+      setActive(0);
     })();
   </script>
 </body>
