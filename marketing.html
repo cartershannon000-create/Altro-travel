@@ -8,25 +8,33 @@
     name="description"
     content="Altro is a personal city ranking app. Score every place you've been, discover cities that match your taste, and turn travel memories into a living map."
   />
+  <meta name="theme-color" content="#f9fbf7" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Ovo&display=swap" rel="stylesheet" />
   <style>
     :root {
       --dewdrop: #f9fbf7;
+      --dewdrop-deep: #f1f4ec;
       --cream: #fbf8f1;
       --white: #ffffff;
       --moss: #2f3e2c;
       --moss-soft: #4a6444;
       --moss-pale: #7a9978;
+      --moss-mist: #d5dccd;
       --grey: #b8c0c1;
       --amber: #b85c3b;
+      --amber-warm: #d98a64;
       --line: rgba(47, 62, 44, 0.14);
+      --line-soft: rgba(47, 62, 44, 0.08);
       --muted: rgba(47, 62, 44, 0.68);
-      --shadow: 0 24px 48px rgba(47, 62, 44, 0.10);
-      --soft-shadow: 0 14px 28px rgba(47, 62, 44, 0.06);
-      --radius: 12px;
-      --max-width: 1180px;
+      --muted-soft: rgba(47, 62, 44, 0.5);
+      --shadow: 0 30px 60px rgba(47, 62, 44, 0.12);
+      --soft-shadow: 0 18px 36px rgba(47, 62, 44, 0.06);
+      --inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --max-width: 1200px;
     }
 
     * { box-sizing: border-box; }
@@ -38,23 +46,55 @@
       background: var(--dewdrop);
       font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
     .container {
       width: min(calc(100% - 40px), var(--max-width));
       margin: 0 auto;
+      position: relative;
     }
 
-    /* ── Top bar ──────────────────────────────────────────── */
+    /* ── Background layers ─────────────────────────────── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-layer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(70% 50% at 80% -10%, rgba(122, 153, 120, 0.16), transparent 60%),
+        radial-gradient(60% 40% at -10% 20%, rgba(184, 92, 59, 0.06), transparent 60%);
+    }
+    .bg-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.45;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.18  0 0 0 0 0.24  0 0 0 0 0.17  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      mix-blend-mode: multiply;
+    }
+
+    .shell { position: relative; z-index: 1; }
+
+    /* ── Top bar ───────────────────────────────────────── */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: rgba(249, 251, 247, 0.92);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
+      z-index: 30;
+      background: rgba(249, 251, 247, 0.78);
+      border-bottom: 1px solid var(--line-soft);
+      backdrop-filter: saturate(140%) blur(18px);
+      -webkit-backdrop-filter: saturate(140%) blur(18px);
     }
 
     .topbar-inner {
@@ -66,13 +106,14 @@
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: baseline;
       gap: 10px;
       font-family: "Ovo", Georgia, serif;
-      font-size: 31px;
+      font-size: 30px;
       line-height: 1;
       color: var(--moss);
+      letter-spacing: -0.01em;
     }
 
     .brand span {
@@ -80,39 +121,73 @@
       height: 8px;
       border-radius: 50%;
       background: var(--moss);
+      box-shadow: 0 0 0 3px rgba(122, 153, 120, 0.22);
     }
 
     .top-links {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 26px;
       color: var(--muted);
       font-size: 14px;
       font-weight: 600;
     }
 
+    .top-links a {
+      position: relative;
+      padding: 4px 0;
+      transition: color 180ms ease;
+    }
+
+    .top-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 1px;
+      background: var(--moss);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 220ms ease;
+    }
+
     .top-links a:hover { color: var(--moss); }
+    .top-links a:hover::after { transform: scaleX(1); }
 
     .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       min-height: 48px;
-      padding: 0 28px;
-      border-radius: 10px;
+      padding: 0 26px;
+      border-radius: 999px;
       background: var(--moss);
       color: var(--dewdrop);
       font-size: 13px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      transition: transform 160ms ease, box-shadow 160ms ease;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      box-shadow: 0 10px 22px rgba(47, 62, 44, 0.16);
     }
 
     .button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 26px rgba(47, 62, 44, 0.22);
+      box-shadow: 0 18px 32px rgba(47, 62, 44, 0.24);
+      background: #263322;
     }
+
+    .button .arrow {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 220ms ease;
+    }
+    .button:hover .arrow { transform: translateX(3px); }
 
     .button.secondary {
       background: transparent;
@@ -121,43 +196,69 @@
       font-weight: 600;
       letter-spacing: 0;
       text-transform: none;
+      box-shadow: none;
+    }
+    .button.secondary:hover {
+      background: rgba(47, 62, 44, 0.05);
+      box-shadow: none;
     }
 
     /* ── Hero ──────────────────────────────────────────── */
-    .hero { padding: 76px 0 52px; }
+    .hero {
+      position: relative;
+      padding: 88px 0 64px;
+      overflow: hidden;
+    }
 
     .hero-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-      gap: 52px;
+      gap: 56px;
       align-items: center;
     }
 
     .eyebrow {
       display: inline-flex;
-      margin-bottom: 20px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding: 6px 14px;
+      background: rgba(47, 62, 44, 0.06);
+      border: 1px solid var(--line-soft);
+      border-radius: 999px;
       color: var(--moss);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 0 3px rgba(184, 92, 59, 0.18);
     }
 
     h1, h2 {
       font-family: "Ovo", Georgia, serif;
       font-weight: 400;
+      letter-spacing: -0.015em;
     }
 
     h1 {
-      max-width: 11ch;
-      margin: 0 0 22px;
-      font-size: clamp(54px, 8vw, 96px);
-      line-height: 0.95;
+      max-width: 12ch;
+      margin: 0 0 24px;
+      font-size: clamp(56px, 8.4vw, 104px);
+      line-height: 0.96;
     }
 
     h1 .accent {
       position: relative;
       white-space: nowrap;
+      font-style: italic;
     }
 
     h1 .accent::after {
@@ -165,15 +266,16 @@
       position: absolute;
       left: -2px;
       right: -2px;
-      bottom: 4px;
-      height: 6px;
+      bottom: 6px;
+      height: 8px;
       border-radius: 999px;
       background: var(--moss-pale);
-      opacity: 0.55;
+      opacity: 0.5;
+      z-index: -1;
     }
 
     .lede {
-      max-width: 620px;
+      max-width: 560px;
       margin: 0;
       color: var(--muted);
       font-size: 19px;
@@ -183,14 +285,14 @@
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-top: 32px;
+      margin-top: 34px;
     }
 
     .micro-points {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 26px;
+      gap: 18px;
+      margin-top: 28px;
     }
 
     .micro-points span {
@@ -204,18 +306,29 @@
 
     .micro-points span::before {
       content: "";
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--moss);
     }
 
-    /* ── Phone preview ──────────────────────────────────────────── */
+    /* ── Phone preview ─────────────────────────────────── */
     .phone-stage {
       position: relative;
-      min-height: 560px;
+      min-height: 600px;
       display: grid;
       place-items: center;
+    }
+
+    .phone-stage::before {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(122, 153, 120, 0.28), transparent 70%);
+      filter: blur(8px);
+      z-index: 1;
     }
 
     .phone {
@@ -223,15 +336,34 @@
       z-index: 2;
       width: min(100%, 320px);
       padding: 10px;
-      background: #11140f;
-      border-radius: 40px;
-      box-shadow: var(--shadow);
+      background: linear-gradient(160deg, #1c2018 0%, #11140f 60%);
+      border-radius: 44px;
+      box-shadow:
+        var(--shadow),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      transform: rotate(-2deg);
+      transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .phone-stage:hover .phone { transform: rotate(-2deg) translateY(-6px); }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92px;
+      height: 24px;
+      background: #0b0d09;
+      border-radius: 999px;
+      z-index: 3;
     }
 
     .phone-screen {
       aspect-ratio: 1206 / 2478;
       background: var(--dewdrop);
-      border-radius: 30px;
+      border-radius: 34px;
       overflow: hidden;
       position: relative;
     }
@@ -244,17 +376,121 @@
       object-position: center top;
     }
 
-    /* ── Sections ──────────────────────────────────────────── */
-    .section { padding: 70px 0; }
+    .float-card {
+      position: absolute;
+      z-index: 3;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--soft-shadow);
+      font-size: 13px;
+      color: var(--moss);
+      transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .float-card.fc-score {
+      top: 14%;
+      left: -8%;
+      transform: rotate(-4deg);
+    }
+
+    .float-card.fc-match {
+      bottom: 12%;
+      right: -6%;
+      transform: rotate(3deg);
+    }
+
+    .phone-stage:hover .float-card.fc-score { transform: rotate(-4deg) translateY(-4px); }
+    .phone-stage:hover .float-card.fc-match { transform: rotate(3deg) translateY(-4px); }
+
+    .float-card .fc-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .float-card .fc-value {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 22px;
+    }
+
+    .fc-value small {
+      font-family: "Inter", sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .fc-bar {
+      margin-top: 8px;
+      width: 110px;
+      height: 4px;
+      background: rgba(47, 62, 44, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .fc-bar i {
+      display: block;
+      height: 100%;
+      background: var(--moss);
+      border-radius: 999px;
+    }
+
+    /* ── Stat strip ────────────────────────────────────── */
+    .stats {
+      padding: 36px 0 64px;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      padding: 28px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--soft-shadow);
+    }
+    .stat {
+      padding: 8px 18px;
+      border-right: 1px solid var(--line-soft);
+    }
+    .stat:last-child { border-right: 0; }
+
+    .stat .num {
+      display: block;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 36px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat .label {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* ── Sections ──────────────────────────────────────── */
+    .section { padding: 78px 0; position: relative; }
 
     .section-head {
-      max-width: 720px;
-      margin-bottom: 36px;
+      max-width: 740px;
+      margin-bottom: 48px;
     }
 
     .section-head h2 {
-      margin: 0 0 12px;
-      font-size: clamp(38px, 5vw, 60px);
+      margin: 14px 0 14px;
+      font-size: clamp(40px, 5.2vw, 64px);
       line-height: 1;
     }
 
@@ -264,39 +500,53 @@
       font-size: 18px;
     }
 
-    /* ── Feature rows (alternating screenshot + copy) ── */
+    /* ── Feature rows ──────────────────────────────────── */
     .feature-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
-      gap: 60px;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+      gap: 64px;
       align-items: center;
-      padding: 48px 0;
-      border-top: 1px solid var(--line);
+      padding: 56px 0;
+      border-top: 1px solid var(--line-soft);
     }
 
     .feature-row.flip {
-      grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+      grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
     }
 
     .feature-row.flip .feature-copy { order: 2; }
     .feature-row.flip .feature-phone { order: 1; }
 
     .feature-copy h3 {
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       font-family: "Ovo", Georgia, serif;
       font-weight: 400;
-      font-size: clamp(32px, 4vw, 44px);
+      font-size: clamp(32px, 4.2vw, 46px);
       line-height: 1.05;
+      letter-spacing: -0.015em;
     }
 
     .feature-copy .kicker {
-      display: block;
-      margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
       color: var(--moss);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+    }
+
+    .kicker svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--moss);
+      stroke-width: 1.6;
+      fill: none;
     }
 
     .feature-copy p {
@@ -306,18 +556,58 @@
       max-width: 540px;
     }
 
+    .feature-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 22px 0 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .feature-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--moss);
+      font-size: 14px;
+    }
+
+    .feature-bullets li::before {
+      content: "";
+      flex-shrink: 0;
+      margin-top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--moss-pale);
+    }
+
     .feature-phone {
       justify-self: center;
-      width: min(100%, 280px);
-      padding: 9px;
-      background: #11140f;
-      border-radius: 36px;
-      box-shadow: var(--soft-shadow);
+      position: relative;
+      width: min(100%, 290px);
+      padding: 10px;
+      background: linear-gradient(160deg, #1c2018 0%, #11140f 60%);
+      border-radius: 38px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-phone::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 20px;
+      background: #0b0d09;
+      border-radius: 999px;
+      z-index: 3;
     }
 
     .feature-phone-screen {
       aspect-ratio: 1206 / 2478;
-      border-radius: 28px;
+      border-radius: 30px;
       overflow: hidden;
       background: var(--dewdrop);
     }
@@ -330,36 +620,60 @@
       object-position: center top;
     }
 
-    /* ── How it works ──────────────────────────────────────────── */
+    /* ── How it works ──────────────────────────────────── */
     .flow {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+      gap: 18px;
       counter-reset: step;
+    }
+
+    .flow::before {
+      content: "";
+      position: absolute;
+      top: 38px;
+      left: 8%;
+      right: 8%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--line) 12%, var(--line) 88%, transparent);
+      z-index: 0;
     }
 
     .flow-card {
       counter-increment: step;
-      padding: 24px;
+      position: relative;
+      z-index: 1;
+      padding: 28px 22px;
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--soft-shadow);
+      transition: transform 220ms ease, box-shadow 220ms ease;
     }
 
-    .flow-card::before {
-      content: "0" counter(step);
+    .flow-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 44px rgba(47, 62, 44, 0.12);
+    }
+
+    .flow-num {
       display: inline-flex;
-      margin-bottom: 20px;
-      color: var(--moss);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      background: var(--moss);
+      color: var(--dewdrop);
+      font-family: "Ovo", Georgia, serif;
+      font-size: 16px;
     }
 
     .flow-card h3 {
       margin: 0 0 8px;
-      font-size: 18px;
+      font-size: 20px;
       font-family: "Ovo", Georgia, serif;
       font-weight: 400;
     }
@@ -367,86 +681,288 @@
     .flow-card p {
       margin: 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 14.5px;
+      line-height: 1.6;
     }
 
-    /* ── Quote band ──────────────────────────────────────────── */
+    /* ── City marquee ──────────────────────────────────── */
+    .marquee-section {
+      padding: 28px 0 52px;
+    }
+    .marquee {
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 48px;
+      width: max-content;
+      animation: marquee 38s linear infinite;
+      font-family: "Ovo", Georgia, serif;
+      font-size: clamp(28px, 4vw, 44px);
+      color: var(--moss);
+      opacity: 0.75;
+    }
+    .marquee-track span {
+      display: inline-flex;
+      align-items: center;
+      gap: 48px;
+      white-space: nowrap;
+    }
+    .marquee-track span::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--moss-pale);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── Quote band ────────────────────────────────────── */
     .quote-band {
+      position: relative;
       margin: 12px 0 0;
-      padding: 48px;
-      background: var(--moss);
+      padding: 64px 56px;
+      background:
+        radial-gradient(120% 100% at 0% 0%, rgba(122, 153, 120, 0.22), transparent 60%),
+        linear-gradient(150deg, #2f3e2c 0%, #243018 100%);
       color: var(--cream);
       border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .quote-band::before {
+      content: "\201C";
+      position: absolute;
+      top: -32px;
+      left: 28px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 260px;
+      line-height: 1;
+      color: var(--moss-pale);
+      opacity: 0.22;
+      pointer-events: none;
     }
 
     .quote-band p {
-      max-width: 820px;
+      position: relative;
+      max-width: 860px;
       margin: 0;
       font-family: "Ovo", Georgia, serif;
-      font-size: clamp(26px, 3.6vw, 42px);
-      line-height: 1.15;
+      font-size: clamp(28px, 3.8vw, 46px);
+      line-height: 1.18;
+      letter-spacing: -0.01em;
     }
 
-    /* ── Join section ──────────────────────────────────────────── */
+    .quote-attr {
+      position: relative;
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Inter", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(251, 248, 241, 0.7);
+    }
+
+    .quote-attr::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: rgba(251, 248, 241, 0.4);
+    }
+
+    /* ── Join section ──────────────────────────────────── */
     .join-card {
-      background: var(--white);
+      position: relative;
+      background:
+        radial-gradient(120% 100% at 100% 0%, rgba(122, 153, 120, 0.15), transparent 55%),
+        var(--white);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--soft-shadow);
-      padding: 48px;
+      padding: 64px 48px;
       text-align: center;
+      overflow: hidden;
     }
 
+    .join-card::before,
+    .join-card::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      filter: blur(0px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .join-card::before {
+      top: -120px;
+      left: -80px;
+      background: radial-gradient(closest-side, var(--moss-pale), transparent 70%);
+      opacity: 0.5;
+    }
+    .join-card::after {
+      bottom: -120px;
+      right: -80px;
+      background: radial-gradient(closest-side, var(--amber-warm), transparent 70%);
+      opacity: 0.35;
+    }
+
+    .join-card .inner { position: relative; z-index: 1; }
+
     .join-card h2 {
-      margin: 0 0 12px;
-      font-size: clamp(34px, 4vw, 52px);
+      margin: 14px 0 14px;
+      font-size: clamp(34px, 4.2vw, 56px);
       line-height: 1.05;
     }
 
     .join-card p {
       max-width: 580px;
-      margin: 0 auto 28px;
+      margin: 0 auto 30px;
       color: var(--muted);
       font-size: 17px;
     }
 
-    /* ── Footer ──────────────────────────────────────────── */
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 22px;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .trust-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .trust-row svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--moss-soft);
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
     .footer {
-      padding: 34px 0 46px;
+      padding: 56px 0 48px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 14px;
     }
 
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 18px;
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 36px;
+      align-items: start;
     }
 
-    .footer-links { display: flex; gap: 16px; }
+    .footer-brand .brand { margin-bottom: 16px; }
+    .footer-brand p {
+      max-width: 360px;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
 
-    /* ── Responsive ──────────────────────────────────────────── */
-    @media (max-width: 900px) {
+    .footer-col h4 {
+      margin: 0 0 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--moss);
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-col a:hover { color: var(--moss); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-soft);
+      font-size: 13px;
+    }
+
+    /* ── Reveal animations ─────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .marquee-track { animation: none; }
+      .phone, .float-card { transition: none; }
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 980px) {
       .top-links { display: none; }
-      .hero-grid, .flow { grid-template-columns: 1fr; }
-      .feature-row, .feature-row.flip { grid-template-columns: 1fr; gap: 32px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat { border-bottom: 1px solid var(--line-soft); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(3), .stat:nth-child(4) { border-bottom: 0; }
+      .feature-row, .feature-row.flip { grid-template-columns: 1fr; gap: 36px; }
       .feature-row.flip .feature-copy { order: 1; }
       .feature-row.flip .feature-phone { order: 2; }
-      .phone-stage { min-height: 500px; }
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .flow::before { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .phone-stage { min-height: 540px; }
+      .phone-stage::before { width: 280px; height: 280px; }
+      .float-card.fc-score { left: 0; }
+      .float-card.fc-match { right: 0; }
     }
 
     @media (max-width: 620px) {
       .container { width: min(calc(100% - 28px), var(--max-width)); }
-      .hero { padding-top: 48px; }
-      h1 { font-size: 56px; }
+      .hero { padding-top: 56px; }
+      h1 { font-size: 54px; }
       .phone { width: min(100%, 270px); }
-      .quote-band, .join-card { padding: 32px; }
+      .quote-band { padding: 44px 28px; }
+      .quote-band::before { font-size: 180px; top: -16px; left: 12px; }
+      .join-card { padding: 44px 28px; }
+      .stat-grid { padding: 18px; }
+      .stat { padding: 12px; }
+      .stat .num { font-size: 28px; }
+      .flow { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <div class="bg-layer" aria-hidden="true"></div>
   <div class="shell">
     <header class="topbar">
       <div class="container topbar-inner">
@@ -458,65 +974,113 @@
           <a href="#map">Map</a>
           <a href="./privacy.html">Privacy</a>
         </nav>
-        <a class="button" href="#join">Join Waitlist</a>
+        <a class="button" href="#join">
+          Join Waitlist
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </header>
 
     <main id="top">
 
-      <!-- ── Hero ──────────────────────────────────────────── -->
+      <!-- ── Hero ──────────────────────────────────────── -->
       <section class="hero">
         <div class="container hero-grid">
-          <div>
+          <div class="reveal">
             <span class="eyebrow">Travel, Ranked</span>
             <h1>Rank the cities<br>that shaped <span class="accent">you</span>.</h1>
             <p class="lede">
               Altro is a personal city ranking app. Score every place you've been
-              on a 1–10 scale, discover cities that match your taste, and turn
+              on a 1&ndash;10 scale, discover cities that match your taste, and turn
               travel memories into a living map.
             </p>
             <div class="hero-actions">
-              <a class="button" href="#join">Join Waitlist</a>
+              <a class="button" href="#join">
+                Join Waitlist
+                <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
               <a class="button secondary" href="#rank">See How It Works</a>
             </div>
             <div class="micro-points" aria-label="Product highlights">
-              <span>1–10 city scoring</span>
+              <span>1&ndash;10 city scoring</span>
               <span>Taste-based discovery</span>
               <span>Weekly curated picks</span>
             </div>
           </div>
 
-          <div class="phone-stage" aria-label="Altro app preview">
+          <div class="phone-stage reveal" aria-label="Altro app preview">
+            <div class="float-card fc-score" aria-hidden="true">
+              <span class="fc-label">Lisbon</span>
+              <span class="fc-value">9.2 <small>/ 10</small></span>
+              <span class="fc-bar"><i style="width:92%"></i></span>
+            </div>
             <div class="phone">
               <div class="phone-screen">
                 <img class="app-shot" src="visted.png" alt="Altro app — ranked cities list with scores" />
               </div>
             </div>
+            <div class="float-card fc-match" aria-hidden="true">
+              <span class="fc-label">Match</span>
+              <span class="fc-value">94% <small>your taste</small></span>
+              <span class="fc-bar"><i style="width:94%"></i></span>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ── Feature: Rank ──────────────────────────────────────────── -->
+      <!-- ── Stat strip ────────────────────────────────── -->
+      <section class="stats">
+        <div class="container reveal">
+          <div class="stat-grid">
+            <div class="stat">
+              <span class="num">1&ndash;10</span>
+              <span class="label">Personal scoring scale</span>
+            </div>
+            <div class="stat">
+              <span class="num">6</span>
+              <span class="label">Taste attributes</span>
+            </div>
+            <div class="stat">
+              <span class="num">∞</span>
+              <span class="label">Cities you can rank</span>
+            </div>
+            <div class="stat">
+              <span class="num">Weekly</span>
+              <span class="label">Curated recommendations</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Feature: Rank ─────────────────────────────── -->
       <section class="section" id="rank">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head reveal">
             <span class="eyebrow">Why Altro</span>
             <h2>A travel app for what you actually loved.</h2>
             <p>
-              Most travel apps track plans. Altro tracks taste — what stayed with
-              you, what you'd return to first, and what belongs on your personal map.
+              Most travel apps track plans. Altro tracks taste &mdash; what stayed
+              with you, what you'd return to first, and what belongs on your personal map.
             </p>
           </div>
 
-          <div class="feature-row">
+          <div class="feature-row reveal">
             <div class="feature-copy">
-              <span class="kicker">Rank</span>
+              <span class="kicker">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                Rank
+              </span>
               <h3>Every city, scored 1 to 10.</h3>
               <p>
                 Log a city, sort it into a sentiment bucket, then sharpen the order
                 with quick head-to-head comparisons. Your scores recalculate live
                 as your list grows.
               </p>
+              <ul class="feature-bullets">
+                <li>Loved it, liked it, or it was fine &mdash; start with a feeling.</li>
+                <li>A few quick comparisons sharpen the order.</li>
+                <li>Scores update automatically as your list grows.</li>
+              </ul>
             </div>
             <div class="feature-phone">
               <div class="feature-phone-screen">
@@ -525,15 +1089,23 @@
             </div>
           </div>
 
-          <div class="feature-row flip" id="discover">
+          <div class="feature-row flip reveal" id="discover">
             <div class="feature-copy">
-              <span class="kicker">Discover</span>
+              <span class="kicker">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg>
+                Discover
+              </span>
               <h3>Find cities that match your taste.</h3>
               <p>
                 Swipe through places tuned to what you actually love. Save the
-                ones that fit, skip the ones that don't — Altro learns your taste
+                ones that fit, skip the ones that don't &mdash; Altro learns your taste
                 with every swipe.
               </p>
+              <ul class="feature-bullets">
+                <li>One card, one decision &mdash; save or skip.</li>
+                <li>Recommendations adapt in real time.</li>
+                <li>Build a wishlist that actually reflects you.</li>
+              </ul>
             </div>
             <div class="feature-phone">
               <div class="feature-phone-screen">
@@ -542,15 +1114,23 @@
             </div>
           </div>
 
-          <div class="feature-row" id="recs">
+          <div class="feature-row reveal" id="recs">
             <div class="feature-copy">
-              <span class="kicker">Weekly Picks</span>
+              <span class="kicker">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6m0 0 3-3m-3 3-3-3M4 13l4 8h8l4-8"/></svg>
+                Weekly Picks
+              </span>
               <h3>Curated cities, tuned to you.</h3>
               <p>
                 Every week, hand-picked destinations matched to the places
                 you've already ranked. Similar to what you love, trending among
                 people like you, and right for the season.
               </p>
+              <ul class="feature-bullets">
+                <li>Three picks, every Sunday morning.</li>
+                <li>Matched against your scores, not generic trends.</li>
+                <li>Always seasonal &mdash; right place, right time.</li>
+              </ul>
             </div>
             <div class="feature-phone">
               <div class="feature-phone-screen">
@@ -559,15 +1139,23 @@
             </div>
           </div>
 
-          <div class="feature-row flip" id="map">
+          <div class="feature-row flip reveal" id="map">
             <div class="feature-copy">
-              <span class="kicker">World Map</span>
+              <span class="kicker">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
+                World Map
+              </span>
               <h3>Your travel life, on a single map.</h3>
               <p>
                 Every ranked and saved city becomes part of a living map of your
-                taste. Filter by visited, saved, or all — and see your footprint
+                taste. Filter by visited, saved, or all &mdash; and see your footprint
                 at a glance.
               </p>
+              <ul class="feature-bullets">
+                <li>Filter visited, saved, or both.</li>
+                <li>Pins color-coded by score.</li>
+                <li>Watch your map grow over time.</li>
+              </ul>
             </div>
             <div class="feature-phone">
               <div class="feature-phone-screen">
@@ -576,15 +1164,23 @@
             </div>
           </div>
 
-          <div class="feature-row">
+          <div class="feature-row reveal">
             <div class="feature-copy">
-              <span class="kicker">City Match</span>
+              <span class="kicker">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/></svg>
+                City Match
+              </span>
               <h3>Know if a city fits before you go.</h3>
               <p>
-                Every city is scored against your taste across six attributes —
+                Every city is scored against your taste across six attributes &mdash;
                 cuisine, walkability, livability, nightlife, affordability, and
-                safety — so you know which places will feel like home.
+                safety &mdash; so you know which places will feel like home.
               </p>
+              <ul class="feature-bullets">
+                <li>Six attributes, weighted by what you care about.</li>
+                <li>One match score that tells you the truth.</li>
+                <li>Skip cities that don't fit before you book.</li>
+              </ul>
             </div>
             <div class="feature-phone">
               <div class="feature-phone-screen">
@@ -593,15 +1189,23 @@
             </div>
           </div>
 
-          <div class="feature-row flip">
+          <div class="feature-row flip reveal">
             <div class="feature-copy">
-              <span class="kicker">Social</span>
+              <span class="kicker">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM3 21a8 8 0 0 1 16 0M17 3a4 4 0 0 1 0 8M21 21a8 8 0 0 0-3-6"/></svg>
+                Social
+              </span>
               <h3>See what your friends are ranking.</h3>
               <p>
                 Follow people whose taste you trust. Discover cities through
                 their real rankings, compare your travel profiles, and find
                 places you both would love.
               </p>
+              <ul class="feature-bullets">
+                <li>Follow people whose taste you trust.</li>
+                <li>Compare profiles side-by-side.</li>
+                <li>Find cities you'd both love.</li>
+              </ul>
             </div>
             <div class="feature-phone">
               <div class="feature-phone-screen">
@@ -612,10 +1216,24 @@
         </div>
       </section>
 
-      <!-- ── How it works ──────────────────────────────────────────── -->
+      <!-- ── City marquee ──────────────────────────────── -->
+      <section class="marquee-section" aria-hidden="true">
+        <div class="marquee">
+          <div class="marquee-track">
+            <span>Lisbon</span><span>Tokyo</span><span>Mexico City</span><span>Marrakech</span>
+            <span>Porto</span><span>Kyoto</span><span>Buenos Aires</span><span>Copenhagen</span>
+            <span>Hanoi</span><span>Cape Town</span><span>Istanbul</span><span>Oaxaca</span>
+            <span>Lisbon</span><span>Tokyo</span><span>Mexico City</span><span>Marrakech</span>
+            <span>Porto</span><span>Kyoto</span><span>Buenos Aires</span><span>Copenhagen</span>
+            <span>Hanoi</span><span>Cape Town</span><span>Istanbul</span><span>Oaxaca</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── How it works ──────────────────────────────── -->
       <section class="section" id="flow">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head reveal">
             <span class="eyebrow">How It Works</span>
             <h2>Light to use. Honest about your taste.</h2>
             <p>
@@ -623,20 +1241,24 @@
               with comparisons, and watch your map grow.
             </p>
           </div>
-          <div class="flow">
+          <div class="flow reveal">
             <article class="flow-card">
+              <span class="flow-num">1</span>
               <h3>Add a city</h3>
-              <p>Start with where you've been and a quick sentiment — loved it, liked it, or it was fine.</p>
+              <p>Start with where you've been and a quick sentiment &mdash; loved it, liked it, or it was fine.</p>
             </article>
             <article class="flow-card">
+              <span class="flow-num">2</span>
               <h3>Compare two</h3>
               <p>Pick the one you'd return to first. A few rounds is enough to sharpen the order.</p>
             </article>
             <article class="flow-card">
+              <span class="flow-num">3</span>
               <h3>Rate attributes</h3>
-              <p>Score cuisine, walkability, nightlife, and more — Altro learns what you actually value.</p>
+              <p>Score cuisine, walkability, nightlife, and more &mdash; Altro learns what you actually value.</p>
             </article>
             <article class="flow-card">
+              <span class="flow-num">4</span>
               <h3>Discover what's next</h3>
               <p>Get curated picks and taste-matched cities the moment your list is alive.</p>
             </article>
@@ -644,43 +1266,105 @@
         </div>
       </section>
 
-      <!-- ── Quote ──────────────────────────────────────────── -->
+      <!-- ── Quote ─────────────────────────────────────── -->
       <section class="section">
-        <div class="container">
+        <div class="container reveal">
           <div class="quote-band">
             <p>
-              A quiet record of the places that pulled you forward — and a
+              A quiet record of the places that pulled you forward &mdash; and a
               compass for the next ones that will.
             </p>
+            <span class="quote-attr">The Altro promise</span>
           </div>
         </div>
       </section>
 
-      <!-- ── Join ──────────────────────────────────────────── -->
+      <!-- ── Join ──────────────────────────────────────── -->
       <section class="section" id="join">
-        <div class="container">
+        <div class="container reveal">
           <div class="join-card">
-            <span class="eyebrow">Coming Soon</span>
-            <h2>Your next favorite city is already waiting.</h2>
-            <p>
-              Altro is currently in private beta. Join the waitlist and we'll
-              let you know when the doors open.
-            </p>
-            <a class="button" href="mailto:altro-travel-app@outlook.com?subject=Altro%20Waitlist">Join Waitlist</a>
+            <div class="inner">
+              <span class="eyebrow">Coming Soon</span>
+              <h2>Your next favorite city is already waiting.</h2>
+              <p>
+                Altro is currently in private beta. Join the waitlist and we'll
+                let you know when the doors open.
+              </p>
+              <a class="button" href="mailto:altro-travel-app@outlook.com?subject=Altro%20Waitlist">
+                Join Waitlist
+                <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <div class="trust-row">
+                <span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                  No spam, ever
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/></svg>
+                  Private by default
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v4l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                  Early-access invites
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <div class="container footer-inner">
-        <span>© 2026 Altro. Built for thoughtful travel.</span>
-        <div class="footer-links">
-          <a href="./privacy.html">Privacy</a>
-          <a href="./terms.html">Terms</a>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="#top" aria-label="Altro home">Altro <span></span></a>
+            <p>A personal city ranking app. Score where you've been, discover where you'll love, and turn travel memories into a living map.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#rank">Rank</a></li>
+              <li><a href="#discover">Discover</a></li>
+              <li><a href="#recs">Weekly Picks</a></li>
+              <li><a href="#map">World Map</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="mailto:altro-travel-app@outlook.com">Contact</a></li>
+              <li><a href="./privacy.html">Privacy</a></li>
+              <li><a href="./terms.html">Terms</a></li>
+              <li><a href="#join">Waitlist</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Altro. Built for thoughtful travel.</span>
+          <span>Made with care &middot; Hand-picked recommendations</span>
         </div>
       </div>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    })();
+  </script>
 </body>
 </html>
