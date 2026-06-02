@@ -317,6 +317,15 @@
       z-index: -1;
     }
 
+    .poetic {
+      margin: 0 0 16px;
+      font-family: "Ovo", Georgia, serif;
+      font-style: italic;
+      font-size: clamp(18px, 2.1vw, 24px);
+      color: var(--moss-soft);
+      letter-spacing: 0.01em;
+    }
+
     .lede {
       max-width: 520px;
       margin: 0;
@@ -452,6 +461,17 @@
       transform: rotate(-4deg);
     }
 
+    .float-card.fc-ring {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px 12px 12px;
+      left: -86px;
+    }
+
+    .fc-ring .score-ring { width: 56px; height: 56px; flex-shrink: 0; }
+    .fc-ring .fc-text { display: flex; flex-direction: column; }
+
     .float-card.fc-match {
       bottom: 12%;
       right: -68px;
@@ -534,6 +554,65 @@
       font-size: 12.5px;
       color: var(--muted);
       font-weight: 600;
+    }
+
+    /* ── Numbered marker (editorial) ───────────────────── */
+    .num-marker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      color: var(--moss-soft);
+    }
+    .num-marker::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: var(--moss-soft);
+    }
+
+    /* ── Tier legend (signature score-ring colors) ─────── */
+    .tier-legend {
+      margin-top: 22px;
+      padding: 16px 18px;
+      background: rgba(47, 62, 44, 0.04);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      max-width: 520px;
+    }
+    .tier-legend .tier-label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .tier-bar {
+      position: relative;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #c47451 0%, #d98a64 25%, #d4c14a 60%, #6fb469 100%);
+    }
+    .tier-bar::before,
+    .tier-bar::after {
+      position: absolute;
+      top: 14px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 13px;
+      color: var(--moss);
+    }
+    .tier-bar::before { content: "1"; left: 0; }
+    .tier-bar::after { content: "10"; right: 0; }
+    .tier-legend .tier-caption {
+      display: block;
+      margin-top: 26px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
     /* ── Sections ──────────────────────────────────────── */
@@ -657,6 +736,15 @@
       cursor: pointer;
       transition: all 200ms ease;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .slider-tab .tnum {
+      font-family: "Ovo", Georgia, serif;
+      font-size: 12px;
+      color: var(--moss-soft);
+      letter-spacing: 0.06em;
     }
     .slider-tab:hover {
       color: var(--moss);
@@ -667,6 +755,7 @@
       color: var(--dewdrop);
       border-color: var(--moss);
     }
+    .slider-tab.active .tnum { color: var(--moss-pale); }
 
     .slider-viewport {
       overflow-x: auto;
@@ -688,6 +777,7 @@
     }
 
     .slide-inner {
+      position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(220px, 260px);
       gap: 56px;
@@ -697,6 +787,20 @@
       border-radius: var(--radius);
       box-shadow: var(--soft-shadow);
       padding: 36px 40px;
+      overflow: hidden;
+    }
+
+    .slide-inner::before {
+      content: attr(data-num);
+      position: absolute;
+      top: 18px;
+      right: 26px;
+      font-family: "Ovo", Georgia, serif;
+      font-size: 110px;
+      line-height: 1;
+      color: rgba(122, 153, 120, 0.10);
+      pointer-events: none;
+      user-select: none;
     }
 
     .slide-phone {
@@ -1123,7 +1227,7 @@
         <nav class="top-links" aria-label="Primary navigation">
           <a href="#rank">Rank</a>
           <a href="#features">Inside Altro</a>
-          <a href="#flow">How it works</a>
+          <a href="#flow">The Method</a>
           <a href="./privacy.html">Privacy</a>
         </nav>
         <a class="button" href="https://apps.apple.com/app/altro/id6762624185" target="_blank" rel="noopener">
@@ -1141,6 +1245,7 @@
           <div class="reveal">
             <span class="eyebrow">Travel, Ranked</span>
             <h1>Rank the cities<br>that <span class="accent">shape you</span>.</h1>
+            <p class="poetic">Head to head, city by city.</p>
             <p class="lede">
               Altro is a personal city ranking app. Score every place you've been
               on a 1 to 10 scale, discover cities that match your taste, and turn
@@ -1167,10 +1272,26 @@
 
           <div class="phone-stage reveal" aria-label="Altro app preview">
             <div class="phone-wrap">
-              <div class="float-card fc-score" aria-hidden="true">
-                <span class="fc-label">Lisbon</span>
-                <span class="fc-value">10 <small>/ 10</small></span>
-                <span class="fc-bar"><i style="width:100%"></i></span>
+              <div class="float-card fc-score fc-ring" aria-hidden="true">
+                <svg class="score-ring" viewBox="0 0 80 80">
+                  <defs>
+                    <linearGradient id="ringGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#c47451" />
+                      <stop offset="45%" stop-color="#d4c14a" />
+                      <stop offset="100%" stop-color="#6fb469" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="40" cy="40" r="32" stroke="rgba(47,62,44,0.10)" stroke-width="6" fill="none"/>
+                  <circle cx="40" cy="40" r="32" stroke="url(#ringGrad)" stroke-width="6" fill="none"
+                          stroke-linecap="round" pathLength="100" stroke-dasharray="100 100"
+                          transform="rotate(-90 40 40)"/>
+                  <text x="40" y="42" text-anchor="middle" dominant-baseline="middle"
+                        font-family="Ovo, Georgia, serif" font-size="24" fill="#2f3e2c">10</text>
+                </svg>
+                <span class="fc-text">
+                  <span class="fc-label">Lisbon</span>
+                  <span class="fc-value">10 <small>/ 10</small></span>
+                </span>
               </div>
               <div class="phone">
                 <div class="phone-screen">
@@ -1216,6 +1337,7 @@
         <div class="container">
           <div class="feature-row reveal">
             <div class="feature-copy">
+              <span class="num-marker">01</span>
               <span class="kicker">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                 Rank
@@ -1230,11 +1352,17 @@
                 <li>Comparison against your already visited cities to sharpen the order.</li>
                 <li>Scores update automatically as your list grows.</li>
               </ul>
+
+              <div class="tier-legend" aria-label="Score legend">
+                <span class="tier-label">The Tier Ring</span>
+                <div class="tier-bar" aria-hidden="true"></div>
+                <span class="tier-caption">Cities flow from amber to green as your taste sharpens. The ring color is the city's score.</span>
+              </div>
             </div>
             <div class="feature-phone">
               <div class="phone">
                 <div class="phone-screen">
-                  <img src="visted.png" alt="Ranked cities list">
+                  <img class="app-shot" src="visted.png" alt="Ranked cities list">
                 </div>
               </div>
             </div>
@@ -1253,12 +1381,12 @@
 
           <div class="slider reveal" data-slider>
             <div class="slider-nav" role="tablist" aria-label="Features">
-              <button class="slider-tab active" data-i="0" type="button">Weekly Picks</button>
-              <button class="slider-tab" data-i="1" type="button">Saved</button>
-              <button class="slider-tab" data-i="2" type="button">Feed</button>
-              <button class="slider-tab" data-i="3" type="button">Discover</button>
-              <button class="slider-tab" data-i="4" type="button">Map</button>
-              <button class="slider-tab" data-i="5" type="button">City Match</button>
+              <button class="slider-tab active" data-i="0" type="button"><span class="tnum">02</span> Weekly Picks</button>
+              <button class="slider-tab" data-i="1" type="button"><span class="tnum">03</span> Saved</button>
+              <button class="slider-tab" data-i="2" type="button"><span class="tnum">04</span> Feed</button>
+              <button class="slider-tab" data-i="3" type="button"><span class="tnum">05</span> Discover</button>
+              <button class="slider-tab" data-i="4" type="button"><span class="tnum">06</span> Map</button>
+              <button class="slider-tab" data-i="5" type="button"><span class="tnum">07</span> City Match</button>
             </div>
 
             <div class="slider-viewport" data-viewport>
@@ -1266,7 +1394,7 @@
 
                 <!-- 0 Weekly Picks -->
                 <article class="slide" data-slide>
-                  <div class="slide-inner">
+                  <div class="slide-inner" data-num="02">
                     <div class="feature-copy">
                       <span class="kicker">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v6m0 0 3-3m-3 3-3-3M4 13l4 8h8l4-8"/></svg>
@@ -1283,7 +1411,7 @@
                     <div class="slide-phone">
                       <div class="phone">
                         <div class="phone-screen">
-                          <img src="rec_tab.png" alt="Weekly recommendations">
+                          <img class="app-shot" src="rec_tab.png" alt="Weekly recommendations">
                         </div>
                       </div>
                     </div>
@@ -1292,7 +1420,7 @@
 
                 <!-- 1 Saved -->
                 <article class="slide" data-slide>
-                  <div class="slide-inner">
+                  <div class="slide-inner" data-num="03">
                     <div class="feature-copy">
                       <span class="kicker">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
@@ -1309,7 +1437,7 @@
                     <div class="slide-phone">
                       <div class="phone">
                         <div class="phone-screen">
-                          <img src="saved.png" alt="Saved cities wishlist">
+                          <img class="app-shot" src="saved.png" alt="Saved cities wishlist">
                         </div>
                       </div>
                     </div>
@@ -1318,7 +1446,7 @@
 
                 <!-- 2 Feed -->
                 <article class="slide" data-slide>
-                  <div class="slide-inner">
+                  <div class="slide-inner" data-num="04">
                     <div class="feature-copy">
                       <span class="kicker">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zM3 21a8 8 0 0 1 16 0M17 3a4 4 0 0 1 0 8M21 21a8 8 0 0 0-3-6"/></svg>
@@ -1335,7 +1463,7 @@
                     <div class="slide-phone">
                       <div class="phone">
                         <div class="phone-screen">
-                          <img src="feed.png" alt="Social feed">
+                          <img class="app-shot" src="feed.png" alt="Social feed">
                         </div>
                       </div>
                     </div>
@@ -1344,7 +1472,7 @@
 
                 <!-- 3 Discover -->
                 <article class="slide" data-slide>
-                  <div class="slide-inner">
+                  <div class="slide-inner" data-num="05">
                     <div class="feature-copy">
                       <span class="kicker">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg>
@@ -1361,7 +1489,7 @@
                     <div class="slide-phone">
                       <div class="phone">
                         <div class="phone-screen">
-                          <img src="discover_tab.png" alt="Discover tab">
+                          <img class="app-shot" src="discover_tab.png" alt="Discover tab">
                         </div>
                       </div>
                     </div>
@@ -1370,7 +1498,7 @@
 
                 <!-- 4 Map -->
                 <article class="slide" data-slide>
-                  <div class="slide-inner">
+                  <div class="slide-inner" data-num="06">
                     <div class="feature-copy">
                       <span class="kicker">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3zM9 3v15M15 6v15"/></svg>
@@ -1387,7 +1515,7 @@
                     <div class="slide-phone">
                       <div class="phone">
                         <div class="phone-screen">
-                          <img src="visited_map.png" alt="World map view">
+                          <img class="app-shot" src="visited_map.png" alt="World map view">
                         </div>
                       </div>
                     </div>
@@ -1396,7 +1524,7 @@
 
                 <!-- 5 City Match -->
                 <article class="slide" data-slide>
-                  <div class="slide-inner">
+                  <div class="slide-inner" data-num="07">
                     <div class="feature-copy">
                       <span class="kicker">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/></svg>
@@ -1413,7 +1541,7 @@
                     <div class="slide-phone">
                       <div class="phone">
                         <div class="phone-screen">
-                          <img src="Match_score.png" alt="City match breakdown">
+                          <img class="app-shot" src="Match_score.png" alt="City match breakdown">
                         </div>
                       </div>
                     </div>
@@ -1461,7 +1589,7 @@
       <section class="section" id="flow">
         <div class="container">
           <div class="section-head reveal">
-            <span class="eyebrow">How It Works</span>
+            <span class="eyebrow">The Method</span>
             <h2>Simple to use, tailored to your travel taste.</h2>
             <p>
               No spreadsheets, no overthinking. Log a city, rate what you loved, sharpen
@@ -1562,7 +1690,7 @@
             <ul>
               <li><a href="#rank">Rank</a></li>
               <li><a href="#features">Inside Altro</a></li>
-              <li><a href="#flow">How it works</a></li>
+              <li><a href="#flow">The Method</a></li>
               <li><a href="https://apps.apple.com/app/altro/id6762624185" target="_blank" rel="noopener">Download</a></li>
             </ul>
           </div>
