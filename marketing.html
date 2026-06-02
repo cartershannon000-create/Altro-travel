@@ -440,6 +440,19 @@
       object-position: center top;
     }
 
+    .phone-rotator .app-shot {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 700ms ease;
+    }
+    .phone-rotator .app-shot.is-active { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .phone-rotator .app-shot { transition: none; }
+    }
+
     .float-card {
       position: absolute;
       z-index: 4;
@@ -1294,8 +1307,14 @@
                 </span>
               </div>
               <div class="phone">
-                <div class="phone-screen">
-                  <img class="app-shot" src="visted.png" alt="Altro app, ranked cities list with scores" />
+                <div class="phone-screen phone-rotator">
+                  <img class="app-shot is-active" src="visted.png" alt="Altro app, ranked cities list with scores" />
+                  <img class="app-shot" src="rec_tab.png" alt="" aria-hidden="true" />
+                  <img class="app-shot" src="discover_tab.png" alt="" aria-hidden="true" />
+                  <img class="app-shot" src="feed.png" alt="" aria-hidden="true" />
+                  <img class="app-shot" src="visited_map.png" alt="" aria-hidden="true" />
+                  <img class="app-shot" src="saved.png" alt="" aria-hidden="true" />
+                  <img class="app-shot" src="Match_score.png" alt="" aria-hidden="true" />
                 </div>
               </div>
               <div class="float-card fc-match" aria-hidden="true">
@@ -1772,6 +1791,29 @@
       });
 
       setActive(0);
+    })();
+
+    // ── Hero screen rotator ────────────────────────
+    (function () {
+      const rotator = document.querySelector('.phone-rotator');
+      if (!rotator) return;
+      const shots = Array.from(rotator.querySelectorAll('.app-shot'));
+      if (shots.length < 2) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let i = 0;
+      let timer = null;
+      const advance = () => {
+        shots[i].classList.remove('is-active');
+        i = (i + 1) % shots.length;
+        shots[i].classList.add('is-active');
+      };
+      const start = () => { if (!timer) timer = setInterval(advance, 3200); };
+      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop(); else start();
+      });
+      start();
     })();
   </script>
 </body>
